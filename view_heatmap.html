@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Florida Population Growth Forecast</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        .year-selector {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .year-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .year-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .year-btn.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            transform: scale(1.05);
+        }
+        
+        .map-container {
+            position: relative;
+            height: calc(100vh - 250px);
+            margin: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        #map { 
+            height: 100%;
+            width: 100%;
+        }
+        
+        .legend {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            line-height: 2;
+            font-size: 14px;
+        }
+        
+        .legend h4 {
+            color: #2c3e50;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            border-bottom: 2px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+        
+        .legend-color {
+            width: 25px;
+            height: 25px;
+            border-radius: 5px;
+            margin-right: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .gto-indicator {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            font-weight: 700;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 10000;
+            font-size: 18px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+        
+        .leaflet-popup-content-wrapper {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .leaflet-popup-content {
+            margin: 15px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .leaflet-popup-content strong {
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌴 Florida Population Growth Forecast</h1>
+            <p>GTO Triangle (Gainesville-Tampa-Orlando) Corridor Analysis • 2035-2045</p>
+            <div class="year-selector">
+                <button class="year-btn active" onclick="loadYear(2035)">2035</button>
+                <button class="year-btn" onclick="loadYear(2040)">2040</button>
+                <button class="year-btn" onclick="loadYear(2045)">2045</button>
+            </div>
+        </div>
+        
+        <div class="map-container">
+            <div id="map"></div>
+            <div class="loading" id="loading">Loading data</div>
+        </div>
+    </div>
+    
+    <script>
+        let map;
+        let currentLayers = [];
+        let currentYear = 2035;
+        let legendControl;
+        
+        // Function to get color based on growth rate with NEW SCALE
+        function getColorFromGrowthRate(growthRate) {
+            if (growthRate > 10) {
+                return "#e74c3c"; // Red - >10%
+            } else if (growthRate >= 7) {
+                return "#f39c12"; // Orange - 7-10%
+            } else if (growthRate >= 4) {
+                return "#f1c40f"; // Yellow - 4-7%
+            } else {
+                return "#2ecc71"; // Green - <4%
+            }
+        }
+        
+        // Initialize map centered on Florida
+        function initMap() {
+            map = L.map('map', {
+                center: [28.5, -82],
+                zoom: 7,
+                minZoom: 6,
+                maxZoom: 11
+            });
+            
+            // Add base map with better styling
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '© OpenStreetMap contributors © CARTO',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(map);
+            
+            // Add legend with NEW SCALE
+            legendControl = L.control({position: 'bottomright'});
+            legendControl.onAdd = function() {
+                const div = L.DomUtil.create('div', 'legend');
+                div.innerHTML = `
+                    <h4>📊 Growth Rate (2035-2045)</h4>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #e74c3c;"></span>
+                        <span>&gt;10% Highest Growth</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #f39c12;"></span>
+                        <span>7-10% High Growth</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #f1c40f;"></span>
+                        <span>4-7% Moderate Growth</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color" style="background: #2ecc71;"></span>
+                        <span>&lt;4% Lower Growth</span>
+                    </div>
+                    <hr style="margin: 15px 0; border: none; border-top: 1px solid #ddd;">
+                    <div class="legend-item">
+                        <span class="gto-indicator">★ GTO</span>
+                        <span style="margin-left: 10px; font-weight: 600;">Target Counties (Thicker Border)</span>
+                    </div>
+                `;
+                return div;
+            };
+            legendControl.addTo(map);
+            
+            // Load initial year
+            loadYear(2035);
+        }
+        
+        // Clear existing layers
+        function clearLayers() {
+            currentLayers.forEach(layer => {
+                map.removeLayer(layer);
+            });
+            currentLayers = [];
+        }
+        
+        // Load data for specific year
+        function loadYear(year) {
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            
+            // Update button states
+            document.querySelectorAll('.year-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (parseInt(btn.textContent) === year) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Clear existing layers
+            clearLayers();
+            currentYear = year;
+            
+            // Load GeoJSON
+            fetch(`data/Florida_heatmap_${year}.geojson`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(`Loaded data for ${year}:`, data.features.length, 'counties');
+                    
+                    // Create heatmap points with adjusted gradient
+                    const heatPoints = data.features.map(f => {
+                        const coords = f.geometry.coordinates;
+                        const growthRate = f.properties.growth_rate;
+                        
+                        // Map growth rate to intensity for heatmap
+                        let intensity;
+                        if (growthRate > 10) {
+                            intensity = 1.0;
+                        } else if (growthRate >= 7) {
+                            intensity = 0.75;
+                        } else if (growthRate >= 4) {
+                            intensity = 0.5;
+                        } else {
+                            intensity = 0.25;
+                        }
+                        
+                        return [coords[1], coords[0], intensity];
+                    });
+                    
+                    // Add heatmap layer with updated gradient
+                    const heatLayer = L.heatLayer(heatPoints, {
+                        radius: 50,
+                        blur: 35,
+                        maxZoom: 10,
+                        max: 1.0,
+                        gradient: {
+                            0.0: '#2ecc71',
+                            0.25: '#2ecc71',
+                            0.5: '#f1c40f',
+                            0.75: '#f39c12',
+                            1.0: '#e74c3c'
+                        }
+                    }).addTo(map);
+                    currentLayers.push(heatLayer);
+                    
+                    // Add markers with popups
+                    const markerLayer = L.geoJSON(data, {
+                        pointToLayer: (feature, latlng) => {
+                            const isGTO = feature.properties.is_gto;
+                            const growthRate = feature.properties.growth_rate;
+                            
+                            // ALL counties colored by growth rate (no special treatment)
+                            const fillColor = getColorFromGrowthRate(growthRate);
+                            
+                            return L.circleMarker(latlng, {
+                                radius: isGTO ? 12 : 6,
+                                fillColor: fillColor,
+                                color: isGTO ? "#8B0000" : "#2c3e50", // Dark red border for GTO
+                                weight: isGTO ? 4 : 1, // Thicker border for GTO
+                                opacity: 1,
+                                fillOpacity: isGTO ? 0.95 : 0.75
+                            });
+                        },
+                        onEachFeature: (feature, layer) => {
+                            const props = feature.properties;
+                            const gtoLabel = props.is_gto ? '<span class="gto-indicator">★ GTO TRIANGLE</span><br><br>' : '';
+                            
+                            layer.bindPopup(`
+                                ${gtoLabel}
+                                <strong style="font-size: 16px; color: #2c3e50;">${props.county} County</strong><br>
+                                <hr style="margin: 8px 0; border: none; border-top: 1px solid #ddd;">
+                                <strong>${year} Population:</strong><br>
+                                <span style="font-size: 18px; color: #e74c3c; font-weight: 700;">${props.population.toLocaleString()}</span> people<br>
+                                <br>
+                                <strong>Growth Rate (2035-2045):</strong><br>
+                                <span style="font-size: 16px; color: ${props.growth_rate > 10 ? '#e74c3c' : props.growth_rate >= 7 ? '#f39c12' : props.growth_rate >= 4 ? '#f1c40f' : '#2ecc71'}; font-weight: 700;">+${props.growth_rate}%</span>
+                            `, {
+                                maxWidth: 300,
+                                className: 'custom-popup'
+                            });
+                        }
+                    }).addTo(map);
+                    currentLayers.push(markerLayer);
+                    
+                    // Hide loading
+                    document.getElementById('loading').style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Error loading data:', error);
+                    document.getElementById('loading').innerHTML = '❌ Error loading data. Please make sure GeoJSON files exist in the data folder.';
+                    document.getElementById('loading').style.background = '#e74c3c';
+                    document.getElementById('loading').style.color = 'white';
+                });
+        }
+        
+        // Initialize map on page load
+        document.addEventListener('DOMContentLoaded', initMap);
+    </script>
+</body>
+</html>

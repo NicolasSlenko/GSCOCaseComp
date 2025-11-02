@@ -1,0 +1,682 @@
+Gurt: yo
+Yo: gurt
+Plait: :(
+
+
+https://uflorida-my.sharepoint.com/:p:/r/personal/anandachatterjee_ufl_edu/_layouts/15/Doc.aspx?sourcedoc=%7BF6CB53A9-2BDC-4B37-B85A-89FC97F6692B%7D&file=Presentation%201.pptx&action=editNew&mobileredirect=true&wdOrigin=APPHOME-WEB.DIRECT%2CAPPHOME-WEB.BANNER.NEWBLANK&wdPreviousSession=493cce2e-db4d-4acc-a800-f2b83d0fccb7&wdPreviousSessionSrc=AppHomeWeb&ct=1762114894939
+
+
+THEME
+https://slideworks.io/resources/47-real-mckinsey-presentations
+
+
+Situation / Executive Question
+
+
+Florida is exploring the variability of hosting the Summer Olympic games as a catalyst for infrastructure tourism, and economic development.
+
+Central Question:
+
+“Should the state of Florida host the Olympic games, if so where?”
+
+
+Requirements:
+
+Venues
+40 Total Venues
+Venue with Capacity of 80,000+ (Gainesville)
+Infrastructure
+Olympic Village
+Broadcast Center
+Public Transit Capacity
+AIrports Should be able to Accommodate Influx of Passengers
+Post-Use Plan for Infrastructure
+Lodging and Hospitality
+Must have 50,000 Rooms
+Must have 5,000 Restaurants
+
+Sponsorship
+10 Corporate/Private Sector Sponsors
+National and Local Government Backing
+
+
+Joint-City Approach
+
+Based on the requirements, no city in Florida currently has ALL of the things necessary to host the Olympic games. However, who said only one city had to host the games?
+
+We are proposing a joint bid between Gainesville - Tampa - Orlando.
+
+
+
+
+
+
+Executive Summary
+
+GOT OLYMPIC GAMES
+
+
+Florida Olympic Vision: Gainesville–Tampa–Orlando (GTO) Framework
+Case Competition Deck Construction Manual
+(Structured by Introduction → Analysis → Solution → Implementation → Financials → Conclusion)
+
+I. Introduction
+Objective
+Set the scene for Florida’s bid to host the 2040–2050 Summer Olympics and define the strategic question: Can hosting the Games accelerate Florida’s infrastructure, economy, and global positioning while maintaining fiscal responsibility?
+Required Content
+Macro Overview of Florida
+
+
+Use BEBR 2023 population estimates to describe Florida’s projected population growth (2025–2050).
+
+
+Note that Florida is one of the fastest-growing U.S. states, adding roughly one mid-sized city’s worth of residents every year.
+
+
+Summarize top growth counties by CAGR and absolute increase (Orange, Osceola, Lake, Polk, Sumter, Hillsborough, Marion).
+
+
+Regional Strengths
+
+
+Highlight the GTO Triangle (Gainesville–Tampa–Orlando) as an emerging economic super-region within FDOT District 5, supported by inter-city infrastructure and education hubs (UF, UCF, USF).
+
+
+Brightline Expansion Context
+
+
+Describe the Orlando–Tampa extension of Brightline’s inter-city rail as the transportation backbone enabling Games-time mobility and long-term connectivity.
+
+
+Source: Brightline official corridor documentation; FDOT I-4 Corridor studies.
+
+
+Data & Sources
+BEBR Population Projections (Medium series)
+
+
+FDOT Demographic & Commuting Trends
+
+
+Brightline Orlando–Tampa public filings
+
+
+Visit Florida Annual Tourism Reports
+
+
+Charts to Include
+Florida Macro Dashboard – map of county population growth categories (2025–2050).
+
+
+Tourism Flow Diagram – baseline vs. Games uplift factor.
+
+
+Visual Insight
+Florida’s demographic and tourism momentum, combined with its existing inter-city rail expansion, make the state uniquely positioned to host a cost-efficient, legacy-oriented Olympics.
+
+II. Analysis
+Objective
+Establish evidence-based rationale for why GTO is the optimal cluster for hosting relative to alternatives.
+Analytical Components
+Population and Demand Analysis (BEBR)
+
+
+Calculate population growth rate per county:
+
+ CAGR = [(Pop_2050 / Pop_2025)^(1/25)] – 1
+
+
+Aggregate to determine total Games-region population base.
+
+
+Identify counties with the highest projected growth to justify venue locations and housing legacy needs.
+
+
+Employment & Sectoral Structure (ACS + QCEW)
+
+
+Use ACS Table S2403 (Industry by Sex) and QCEW data to determine sector composition across the host region.
+
+
+Compute employment shares by sector:
+
+ Sector_Share = Sector_Employment / Total_Employment
+Identify dominant industries: construction, hospitality, education, healthcare, and services.
+
+
+Commuting and Infrastructure Gaps (ACS + FDOT)
+
+
+Extract ACS S0802 (Mean Travel Time) for inter-county commuters.
+
+
+Quantify dependence on automobiles and the potential for mode shift to high-speed rail.
+
+
+IOC Requirement Benchmarking
+
+
+Compare Florida’s baseline infrastructure to IOC requirements: 40 venues, 80 000-seat stadium, 50 000 hotel rooms, 5 000 restaurants, and transit capacity for 300 000 rides/day.
+
+
+Use existing Orlando/Tampa venue and lodging inventories to evaluate compliance.
+
+
+Charts to Include
+County Growth Ranking – bar chart ranking fastest-growing counties.
+
+
+Sectoral Composition – stacked bar showing employment by industry across GTO.
+
+
+Travel Time vs. Rail Potential – side-by-side bar chart comparing current vs. projected travel times.
+
+
+IOC Compliance Matrix – color-coded table (Compliant / Upgrade / New Build).
+
+
+Analytical Insight
+The GTO corridor aligns with Florida’s fastest-growing and most economically diversified counties, satisfies 90 % of IOC infrastructure standards through existing assets, and demonstrates measurable congestion and productivity challenges that the Games can directly address.
+
+III. Solution
+Objective
+Present the strategic plan—how hosting in the GTO corridor achieves the state’s goals.
+Core Elements
+Concept of Operations
+
+
+Distribute Olympic functions across Gainesville (Core Stadium & Village), Orlando (Media & Tech Hub), and Tampa (Tourism & Hospitality Center).
+
+
+Leverage existing FDOT District 5 corridors and the Brightline extension to integrate all three nodes.
+
+
+Infrastructure Modernization Strategy
+
+
+Accelerate the $66 billion FDOT investment program by prioritizing the GTO Inter-City Transit Corridor (rail + BRT).
+
+
+Introduce digital/modular construction techniques to reduce build time and increase productivity by 50 %.
+
+
+Housing Legacy Strategy
+
+
+Convert the Olympic Village (Gainesville) into 3 000–4 000 permanent workforce and student housing units.
+
+
+Formula:
+
+ Housing_Need = (Pop_2050 – Pop_2025) / Average_Household_Size
+ to show units required vs. planned supply.
+
+
+Charts to Include
+GTO System Map – showing three cities and infrastructure linkages.
+
+
+Infrastructure Allocation – stacked bar of investment categories.
+
+
+Housing Conversion Funnel – population → households → Village units.
+
+
+Solution Insight
+By building upon existing growth corridors and infrastructure, Florida’s GTO model transforms the Olympics into an infrastructure acceleration and housing-legacy program rather than a one-time expenditure.
+
+IV. Implementation
+Objective
+Define how the plan will be executed—timeline, governance, and risk control.
+Steps
+Phased Timeline
+
+
+Phase 1: IOC Targeted Dialogue (0–3 months)
+
+
+Phase 2: Engineering and Land Acquisition (3–9 months)
+
+
+Phase 3: Construction and Delivery (9–18 months)
+
+
+Governance Model
+
+
+State-led Organizing Committee (OCOG) with joint city representation.
+
+
+Private-public partnerships for venue upgrades and housing delivery.
+
+
+Risk Management Framework
+
+
+Create matrix: Risk | Impact | Mitigation.
+
+
+Examples: Funding split → State majority guarantee; Project delay → modular construction contingency; Public acceptance → legacy-housing messaging.
+
+
+Charts to Include
+Gantt Chart – phases and milestones.
+
+
+Risk Matrix – high/medium/low impact and mitigation strategies.
+
+
+Implementation Insight
+A phased, state-backed delivery structure ensures feasibility, accountability, and sustained asset reuse beyond the Games.
+
+V. Financials
+Objective
+Quantify the fiscal and economic return on investment.
+Methodology
+Capital Cost Breakdown
+
+
+Transit = (Length × Cost per mile).
+
+
+Stadium = (Capacity × Cost per seat benchmark).
+
+
+Village = (Units × Cost per unit).
+
+
+Venue Upgrades + Security = Allocated fractions of total CAPEX.
+
+
+Productivity ROI Model (ACS + BEBR)
+
+
+Labor force = Population × Participation rate.
+
+
+Time saved = Current commute – projected commute.
+
+
+Annual Gain = Time saved × Labor force × Value of Time × Workdays.
+
+
+Job Creation Model (BLS + RIMS II)
+
+
+Job-years = Construction spending × Employment multiplier.
+
+
+Distribution by sector using ACS/QCEW shares.
+
+
+Housing Affordability Model (ACS)
+
+
+Rent-to-income ratio = (12 × Median Rent) / Median Income.
+
+
+Compare pre- and post-Village scenario.
+
+
+Charts to Include
+CAPEX Composition – stacked bar (Transit, Stadium, Village, Upgrades, Security).
+
+
+Productivity Waterfall – Time → Value of Time → Annual Return.
+
+
+Job Creation Breakdown – stacked sector chart.
+
+
+Benefit–Cost Curve – cumulative benefit over time vs. investment.
+
+
+Financial Insight
+Redirecting $9–10 billion of Olympic investment into permanent assets yields recurring productivity, employment, and housing benefits that outlast the event horizon.
+
+VI. Conclusion
+Objective
+Summarize findings, state recommendation, and tie outcomes to Florida’s long-term policy goals.
+Content
+Final Recommendation
+
+
+“Florida should host the Summer Olympics through the Gainesville–Tampa–Orlando Triangle. The model leverages existing infrastructure, minimizes fiscal exposure, and produces enduring economic and housing benefits.”
+
+
+Impact Summary Table
+
+
+Goal
+Quantitative Indicator
+Method
+Source
+Tourism
+Games-period visitors uplift
+VISIT Florida baseline × multiplier
+VISIT Florida 2024 Report
+Economy
+Job-years created
+BLS, RIMS II multipliers
+BEA, BLS data 2024
+Infrastructure
+Annual productivity savings
+ACS S0802 + FDOT method
+ACS, FDOT District 5
+Destination & Housing
+Permanent housing units
+BEBR Δ population ÷ ACS HH size
+BEBR 2023, ACS 2023
+
+
+
+
+Legacy Statement
+ Hosting within the GTO Triangle transforms Florida’s Olympic vision from a single event into a state-wide modernization program aligned with long-term population, employment, and mobility trends.
+
+
+n
+Florida Olympic Vision: GTO Case Competition Deck
+Slide-by-Slide Methodology and Visualization Guide
+
+1. Executive Summary: The GTO Investment Thesis
+Objective
+Provide a concise, data-driven recommendation answering the case question: Should Florida host the Summer Olympics?
+Content Requirements
+Thesis statement answering directly: “Yes – Host via the Gainesville-Tampa-Orlando (GTO) Triangle.”
+
+
+Three quantified indicators: total infrastructure investment, estimated annual productivity return, and capital payback period.
+
+
+Data and Calculations
+Total investment: sum of projected CAPEX components (see Slide 3).
+
+
+Annual productivity return: derived from commute-time savings (Slide 4).
+
+
+Payback period = Total Investment / Annual Productivity Gain.
+
+
+Sources
+FDOT 2025 Infrastructure Program (for baseline investment levels)
+
+
+ACS 2023 commute-time and wage data
+
+
+BEBR 2023 population forecasts
+
+
+Visualization
+A single horizontal bar or three-column KPI table. Each column represents one metric (Investment | Productivity Return | Payback Period).
+Intended Insight
+Hosting within the GTO Triangle converts the Olympics from a short-term expenditure into a state infrastructure acceleration plan with measurable economic returns.
+
+2. Strategic Mandate: Alignment with Florida’s State Goals
+Objective
+Show quantitatively how the proposed Olympic plan advances Florida’s four stated policy goals: tourism, economic growth, infrastructure revitalization, and population attraction.
+Data and Calculations
+Tourism: estimated visitors = (Baseline annual visitors × expected multiplier from Games period).
+
+
+Economic Activity: direct + indirect activity = (Input Output Multiplier × Total Olympic spend).
+
+
+Infrastructure Value: use productivity-savings model (Slide 4).
+
+
+Population Attraction: from BEBR 2050 forecast minus 2025 baseline = net growth.
+
+
+Sources
+BEBR 2023 county projections
+
+
+Visit Florida annual tourism data
+
+
+Bureau of Economic Analysis input-output multipliers
+
+
+FDOT 2025 program documentation
+
+
+Visualization
+A four-column grid or dashboard displaying each goal, its metric, and the GTO contribution.
+Intended Insight
+Each of Florida’s macro-level goals has a traceable, measurable linkage to the proposed GTO investment strategy.
+
+3. Cost Model and Methodology
+Objective
+Demonstrate transparency and rigor behind the $9–10 billion infrastructure projection.
+Data and Calculations
+Transit Corridor Cost = (Estimated route miles × cost per mile for high-speed rail/BRT)
+
+
+Stadium Cost = (capacity × benchmark cost per seat from Brisbane 2032 and LA 2028)
+
+
+Village Cost = (units × cost per unit construction)
+
+
+Venue Upgrades and Security = allocated percentages of total infrastructure budget.
+
+
+Sources
+FDOT 2025 Capital Improvement Plan
+
+
+IOC bid documentation for Brisbane 2032 and LA 2028
+
+
+U.S. Census Construction Cost Index
+
+
+Visualization
+A stacked bar chart showing proportional allocation of total capital expenditure by category (Transit, Stadium/Village, Upgrades, Security).
+Intended Insight
+The majority of investment flows to permanent, revenue-producing assets rather than single-use venues, mitigating fiscal exposure.
+
+4. Quantifying Transit Return on Investment
+Objective
+Translate reduced travel time into measurable annual productivity gains for Central Florida.
+Data and Calculations
+Mean Commute Time (Before): from ACS table S0802 for regional auto commuters.
+
+
+Mean Commute Time (After): projected travel time using high-speed rail.
+
+
+Labor Force = BEBR population × ACS labor participation rate.
+
+
+Value of Time (VOT) = (ACS median hourly earnings × 1.2 benefit factor).
+
+
+Annual Productivity Gain = (Time Saved per Worker × Labor Force × VOT × Workdays per Year).
+
+
+Sources
+BEBR 2023 population forecasts
+
+
+ACS 2023 tables S0802 and S2403
+
+
+FDOT District 5 Commuting Trends Report
+
+
+Visualization
+Two components:
+Before/After Bar Chart comparing commute times.
+
+
+Waterfall Chart converting time savings into annual GDP gain.
+
+
+Intended Insight
+Improvements in inter-city travel times directly raise regional productivity, making the $5–6 billion transit corridor fiscally self-sustaining within a decade.
+
+5. Venue and Lodging Validation
+Objective
+Verify that GTO meets or exceeds International Olympic Committee minimum infrastructure requirements.
+Data and Calculations
+Venues Needed: 40 total, 80 000 seating minimum for main stadium.
+
+
+Existing Venues: count of eligible facilities in Orlando and Tampa.
+
+
+Hotel Capacity: existing rooms from Visit Florida inventory.
+
+
+Restaurant Capacity: number of establishments from U.S. Census Business Patterns.
+
+
+Sources
+IOC Hosting Requirements 2025
+
+
+Visit Florida tourism statistics
+
+
+U.S. Census County Business Patterns
+
+
+Visualization
+A compliance matrix (Requirement | Needed | Existing | New | Status).
+ Green = Fully Compliant; Yellow = Upgrade Required.
+Intended Insight
+Approximately 90 percent of required facilities already exist within the GTO region, minimizing new construction and financial risk.
+
+6. Economic Equity and Construction Productivity
+Objective
+Quantify job creation and demonstrate fiscal efficiency using productivity metrics.
+Data and Calculations
+Total Job-Years = (Total Construction Spending × employment multiplier jobs per $ million).
+
+
+Average Earnings = BLS median wages for construction and hospitality.
+
+
+Productivity Improvement = (Target efficiency gain % × industry output per worker).
+
+
+EBITDA Margin Gain = (productivity improvement × margin elasticity from MGI benchmark).
+
+
+Sources
+Bureau of Labor Statistics Occupational Employment Data
+
+
+McKinsey Global Institute, Reinventing Construction (2017)
+
+
+BEA RIMS II employment multipliers
+
+
+Visualization
+Stacked bar chart showing distribution of employment by sector (construction, hospitality, transportation) and line overlay indicating expected productivity improvement.
+Intended Insight
+Applying modular and digital construction methods yields higher job quality and project efficiency while spreading benefits across vulnerable labor sectors.
+
+7. Housing and Quality-of-Life Legacy
+Objective
+Demonstrate that the Olympic Village investment leaves a measurable, permanent social benefit.
+Data and Calculations
+Population Growth = BEBR 2050 projection – 2025 baseline.
+
+
+Household Formation = Population Growth ÷ ACS average household size (S1101).
+
+
+Affordable Housing Gap = (New Households – Planned Housing Units).
+
+
+Rent-to-Income Ratio = (Median Gross Rent × 12) ÷ Median Household Income (B25064 / B19013).
+
+
+Sources
+BEBR County Population Projections 2023
+
+
+ACS 2023 tables S1101, B19013, B25064
+
+
+Visualization
+Funnel Chart translating population growth into housing demand and Olympic Village supply.
+
+
+Before/After Bar Chart comparing rent-to-income ratios.
+
+
+Intended Insight
+The Olympic Village conversion into workforce and student housing directly alleviates Gainesville’s projected housing deficit and improves affordability ratios.
+
+8. Implementation, Risk, and Next Steps
+Objective
+Present an actionable plan and risk-mitigation strategy consistent with a state-backed public investment.
+Data and Calculations
+Timeline: derive durations from IOC Targeted Dialogue phases and standard FDOT project delivery periods.
+
+
+Risk Assessment: probability × impact matrix for funding delays, stakeholder disagreement, and construction overruns.
+
+
+Benefit-Cost Ratio (BCR) = Present Value of All Economic Benefits ÷ Present Value of Costs.
+
+
+Sources
+IOC Host City Contract Guidelines
+
+
+FDOT Project Management Handbook
+
+
+OMB Circular A-94 discount rate guidelines
+
+
+Visualization
+Gantt Chart showing major milestones.
+
+
+Risk Matrix (Impact vs Likelihood) with mitigation measures listed alongside.
+
+
+Intended Insight
+The proposed implementation roadmap demonstrates that GTO can execute a fiscally controlled, schedule-feasible Olympic plan with state-level coordination and private-sector sponsorship.
+
+
+
+
+Slide
+Macro Element to Insert
+Why It Belongs There
+1. Executive Summary
+One-line macro context (population & tourism growth) with source footnotes
+Establishes strategic rationale without crowding the page
+2. Strategic Mandate
+Macro dashboard (Section A) + fastest-growing counties rank/map (Section C)
+Proves alignment to state goals and future demand
+3. Cost Model
+One callout box: “Corridor leverages Brightline Orlando–Tampa expansion” with sources
+Grounds your transit CAPEX and delivery vehicle
+4. Transit ROI
+Brightline time-savings parameter + ACS/FDOT mode-share baseline; formulas only
+Converts macro + project data into the recurring benefit stream
+5. Venue & Lodging
+Overlay venue list on fastest-growing counties map
+De-risks utilization and temporary-build exposure
+6. Equity & Productivity
+Sector mix (ACS/QCEW) → multipliers → job-years; formulas only
+Ties benefits to local workforce composition
+7. Housing Legacy
+Use BEBR growth and ACS household size to translate growth → units needed; formulas only
+Shows the Village as a durable response to growth pressure
+Appendix
+Full methods, tables, and sensitivity inputs; all cited
+Protects main slides from clutter; earns “Technical Quality” points
+
+
