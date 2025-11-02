@@ -45,7 +45,7 @@
             margin-bottom: 20px;
         }
         
-        .year-selector {
+        .controls {
             display: flex;
             justify-content: center;
             gap: 20px;
@@ -53,29 +53,48 @@
             margin-top: 20px;
         }
         
-        .year-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .control-label {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .layer-toggles {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .toggle-btn {
+            background: #95a5a6;
             color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 18px;
+            padding: 12px 25px;
+            font-size: 14px;
             font-weight: 600;
-            border-radius: 50px;
+            border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         
-        .year-btn:hover {
+        .toggle-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         
-        .year-btn.active {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            transform: scale(1.05);
+        .toggle-btn.active {
+            background: #27ae60;
+        }
+        
+        .toggle-btn.active::before {
+            content: '✓ ';
         }
         
         .map-container {
@@ -99,6 +118,8 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             line-height: 2;
             font-size: 14px;
+            max-height: 500px;
+            overflow-y: auto;
         }
         
         .legend h4 {
@@ -180,12 +201,19 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🌴 Florida Population Growth Forecast</h1>
-            <p>GTO Triangle (Gainesville-Tampa-Orlando) Corridor Analysis • 2035-2045</p>
-            <div class="year-selector">
-                <button class="year-btn active" onclick="loadYear(2035)">2035</button>
-                <button class="year-btn" onclick="loadYear(2040)">2040</button>
-                <button class="year-btn" onclick="loadYear(2045)">2045</button>
+            <h1>🌴 Florida GTO Triangle Olympic Bid Analysis</h1>
+            <p>10-Year Population Growth & Infrastructure (2035-2045)</p>
+            
+            <div class="controls">
+                <div class="control-group">
+                    <div class="control-label">Map Layers</div>
+                    <div class="layer-toggles">
+                        <button class="toggle-btn active" onclick="toggleLayer('heatmap')">🔥 Growth Heatmap</button>
+                        <button class="toggle-btn" onclick="toggleLayer('airports')">✈️ Airports</button>
+                        <button class="toggle-btn" onclick="toggleLayer('stadiums')">🏟️ Stadiums</button>
+                        <button class="toggle-btn" onclick="toggleLayer('universities')">🎓 Universities</button>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -197,11 +225,24 @@
     
     <script>
         let map;
-        let currentLayers = [];
-        let currentYear = 2035;
+        let heatmapLayer = null;
+        let countyMarkersLayer = null;
+        let infrastructureLayers = {
+            airports: null,
+            stadiums: null,
+            universities: null
+        };
         let legendControl;
         
-        // Function to get color based on growth rate with NEW SCALE
+        // Track which layers are visible
+        let visibleLayers = {
+            heatmap: true,
+            airports: false,
+            stadiums: false,
+            universities: false
+        };
+        
+        // Function to get color based on growth rate
         function getColorFromGrowthRate(growthRate) {
             if (growthRate > 10) {
                 return "#e74c3c"; // Red - >10%
@@ -214,6 +255,30 @@
             }
         }
         
+        // Toggle infrastructure layers
+        function toggleLayer(layerType) {
+            const btn = event.target;
+            visibleLayers[layerType] = !visibleLayers[layerType];
+            
+            if (visibleLayers[layerType]) {
+                btn.classList.add('active');
+                
+                if (layerType === 'heatmap') {
+                    if (heatmapLayer) map.addLayer(heatmapLayer);
+                } else if (infrastructureLayers[layerType]) {
+                    map.addLayer(infrastructureLayers[layerType]);
+                }
+            } else {
+                btn.classList.remove('active');
+                
+                if (layerType === 'heatmap') {
+                    if (heatmapLayer) map.removeLayer(heatmapLayer);
+                } else if (infrastructureLayers[layerType]) {
+                    map.removeLayer(infrastructureLayers[layerType]);
+                }
+            }
+        }
+        
         // Initialize map centered on Florida
         function initMap() {
             map = L.map('map', {
@@ -223,14 +288,14 @@
                 maxZoom: 11
             });
             
-            // Add base map with better styling
+            // Add base map
             L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
                 attribution: '© OpenStreetMap contributors © CARTO',
                 subdomains: 'abcd',
                 maxZoom: 19
             }).addTo(map);
             
-            // Add legend with NEW SCALE
+            // Add legend
             legendControl = L.control({position: 'bottomright'});
             legendControl.onAdd = function() {
                 const div = L.DomUtil.create('div', 'legend');
@@ -238,61 +303,154 @@
                     <h4>📊 Growth Rate (2035-2045)</h4>
                     <div class="legend-item">
                         <span class="legend-color" style="background: #e74c3c;"></span>
-                        <span>&gt;10% Highest Growth</span>
+                        <span>&gt;10% Highest</span>
                     </div>
                     <div class="legend-item">
                         <span class="legend-color" style="background: #f39c12;"></span>
-                        <span>7-10% High Growth</span>
+                        <span>7-10% High</span>
                     </div>
                     <div class="legend-item">
                         <span class="legend-color" style="background: #f1c40f;"></span>
-                        <span>4-7% Moderate Growth</span>
+                        <span>4-7% Moderate</span>
                     </div>
                     <div class="legend-item">
                         <span class="legend-color" style="background: #2ecc71;"></span>
-                        <span>&lt;4% Lower Growth</span>
+                        <span>&lt;4% Lower</span>
+                    </div>
+                    <hr style="margin: 15px 0; border: none; border-top: 1px solid #ddd;">
+                    <h4>🏗️ Infrastructure</h4>
+                    <div class="legend-item">
+                        <span style="font-size: 20px;">✈️</span>
+                        <span style="margin-left: 10px;">Airports</span>
+                    </div>
+                    <div class="legend-item">
+                        <span style="font-size: 20px;">🏟️</span>
+                        <span style="margin-left: 10px;">Stadiums (60k+)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span style="font-size: 20px;">🏢</span>
+                        <span style="margin-left: 10px;">Arenas</span>
+                    </div>
+                    <div class="legend-item">
+                        <span style="font-size: 20px;">🎓</span>
+                        <span style="margin-left: 10px;">Universities</span>
                     </div>
                     <hr style="margin: 15px 0; border: none; border-top: 1px solid #ddd;">
                     <div class="legend-item">
                         <span class="gto-indicator">★ GTO</span>
-                        <span style="margin-left: 10px; font-weight: 600;">Target Counties (Thicker Border)</span>
+                        <span style="margin-left: 10px; font-weight: 600;">Target Region</span>
                     </div>
                 `;
                 return div;
             };
             legendControl.addTo(map);
             
-            // Load initial year
-            loadYear(2035);
+            // Load infrastructure data
+            loadInfrastructure();
+            
+            // Load population data (using 2045 as it has the full 10-year growth calculated)
+            loadPopulationData();
         }
         
-        // Clear existing layers
-        function clearLayers() {
-            currentLayers.forEach(layer => {
-                map.removeLayer(layer);
-            });
-            currentLayers = [];
+        // Load infrastructure data once
+        function loadInfrastructure() {
+            fetch('data/Florida_infrastructure.geojson')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Infrastructure data loaded:', data.features.length, 'features');
+                    
+                    // Create separate layers for each type
+                    const airports = data.features.filter(f => f.properties.type === 'airport');
+                    const stadiums = data.features.filter(f => f.properties.type === 'stadium');
+                    const universities = data.features.filter(f => f.properties.type === 'university');
+                    
+                    // Create airport layer
+                    infrastructureLayers.airports = L.geoJSON(airports, {
+                        pointToLayer: (feature, latlng) => {
+                            return L.marker(latlng, {
+                                icon: L.divIcon({
+                                    className: 'custom-icon',
+                                    html: '<div style="font-size: 24px;">✈️</div>',
+                                    iconSize: [30, 30]
+                                })
+                            });
+                        },
+                        onEachFeature: (feature, layer) => {
+                            const props = feature.properties;
+                            const gtoLabel = props.is_gto ? '<span class="gto-indicator">★ GTO</span><br>' : '';
+                            layer.bindPopup(`
+                                ${gtoLabel}
+                                <strong style="font-size: 16px;">✈️ ${props.name}</strong><br>
+                                <strong>Code:</strong> ${props.code}<br>
+                                <strong>Type:</strong> ${props.size}
+                            `);
+                        }
+                    });
+                    
+                    // Create stadium layer
+                    infrastructureLayers.stadiums = L.geoJSON(stadiums, {
+                        pointToLayer: (feature, latlng) => {
+                            const icon = feature.properties.capacity > 60000 ? '🏟️' : '🏢';
+                            return L.marker(latlng, {
+                                icon: L.divIcon({
+                                    className: 'custom-icon',
+                                    html: `<div style="font-size: 24px;">${icon}</div>`,
+                                    iconSize: [30, 30]
+                                })
+                            });
+                        },
+                        onEachFeature: (feature, layer) => {
+                            const props = feature.properties;
+                            const gtoLabel = props.is_gto ? '<span class="gto-indicator">★ GTO</span><br>' : '';
+                            const olympicReady = props.olympic_ready ? '<br><strong style="color: #27ae60;">✓ Olympic-Ready Venue</strong>' : '';
+                            layer.bindPopup(`
+                                ${gtoLabel}
+                                <strong style="font-size: 16px;">${props.icon} ${props.name}</strong><br>
+                                <strong>Location:</strong> ${props.location}<br>
+                                <strong>Capacity:</strong> ${props.capacity.toLocaleString()}<br>
+                                <strong>Type:</strong> ${props.stadium_type}${olympicReady}
+                            `);
+                        }
+                    });
+                    
+                    // Create university layer
+                    infrastructureLayers.universities = L.geoJSON(universities, {
+                        pointToLayer: (feature, latlng) => {
+                            return L.marker(latlng, {
+                                icon: L.divIcon({
+                                    className: 'custom-icon',
+                                    html: '<div style="font-size: 24px;">🎓</div>',
+                                    iconSize: [30, 30]
+                                })
+                            });
+                        },
+                        onEachFeature: (feature, layer) => {
+                            const props = feature.properties;
+                            const gtoLabel = props.is_gto ? '<span class="gto-indicator">★ GTO</span><br>' : '';
+                            layer.bindPopup(`
+                                ${gtoLabel}
+                                <strong style="font-size: 16px;">🎓 ${props.name}</strong><br>
+                                <strong>Location:</strong> ${props.location}<br>
+                                <strong>Students:</strong> ${props.students.toLocaleString()}<br>
+                                <strong>Potential:</strong> Olympic Village Site
+                            `);
+                        }
+                    });
+                    
+                    console.log('Infrastructure layers created');
+                })
+                .catch(error => {
+                    console.error('Error loading infrastructure:', error);
+                });
         }
         
-        // Load data for specific year
-        function loadYear(year) {
+        // Load population data
+        function loadPopulationData() {
             // Show loading
             document.getElementById('loading').style.display = 'block';
             
-            // Update button states
-            document.querySelectorAll('.year-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (parseInt(btn.textContent) === year) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            // Clear existing layers
-            clearLayers();
-            currentYear = year;
-            
-            // Load GeoJSON
-            fetch(`data/Florida_heatmap_${year}.geojson`)
+            // Load GeoJSON (use 2045 data which includes growth calculations)
+            fetch('data/Florida_heatmap_2045.geojson')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -300,14 +458,13 @@
                     return response.json();
                 })
                 .then(data => {
-                    console.log(`Loaded data for ${year}:`, data.features.length, 'counties');
+                    console.log('Loaded population data:', data.features.length, 'counties');
                     
-                    // Create heatmap points with adjusted gradient
+                    // Create heatmap points
                     const heatPoints = data.features.map(f => {
                         const coords = f.geometry.coordinates;
                         const growthRate = f.properties.growth_rate;
                         
-                        // Map growth rate to intensity for heatmap
                         let intensity;
                         if (growthRate > 10) {
                             intensity = 1.0;
@@ -322,8 +479,8 @@
                         return [coords[1], coords[0], intensity];
                     });
                     
-                    // Add heatmap layer with updated gradient
-                    const heatLayer = L.heatLayer(heatPoints, {
+                    // Create heatmap layer
+                    heatmapLayer = L.heatLayer(heatPoints, {
                         radius: 50,
                         blur: 35,
                         maxZoom: 10,
@@ -336,22 +493,19 @@
                             1.0: '#e74c3c'
                         }
                     }).addTo(map);
-                    currentLayers.push(heatLayer);
                     
-                    // Add markers with popups
-                    const markerLayer = L.geoJSON(data, {
+                    // Add county markers (always visible)
+                    countyMarkersLayer = L.geoJSON(data, {
                         pointToLayer: (feature, latlng) => {
                             const isGTO = feature.properties.is_gto;
                             const growthRate = feature.properties.growth_rate;
-                            
-                            // ALL counties colored by growth rate (no special treatment)
                             const fillColor = getColorFromGrowthRate(growthRate);
                             
                             return L.circleMarker(latlng, {
                                 radius: isGTO ? 12 : 6,
                                 fillColor: fillColor,
-                                color: isGTO ? "#8B0000" : "#2c3e50", // Dark red border for GTO
-                                weight: isGTO ? 4 : 1, // Thicker border for GTO
+                                color: isGTO ? "#8B0000" : "#2c3e50",
+                                weight: isGTO ? 4 : 1,
                                 opacity: 1,
                                 fillOpacity: isGTO ? 0.95 : 0.75
                             });
@@ -364,25 +518,23 @@
                                 ${gtoLabel}
                                 <strong style="font-size: 16px; color: #2c3e50;">${props.county} County</strong><br>
                                 <hr style="margin: 8px 0; border: none; border-top: 1px solid #ddd;">
-                                <strong>${year} Population:</strong><br>
+                                <strong>2045 Population:</strong><br>
                                 <span style="font-size: 18px; color: #e74c3c; font-weight: 700;">${props.population.toLocaleString()}</span> people<br>
                                 <br>
-                                <strong>Growth Rate (2035-2045):</strong><br>
-                                <span style="font-size: 16px; color: ${props.growth_rate > 10 ? '#e74c3c' : props.growth_rate >= 7 ? '#f39c12' : props.growth_rate >= 4 ? '#f1c40f' : '#2ecc71'}; font-weight: 700;">+${props.growth_rate}%</span>
+                                <strong>10-Year Growth (2035-2045):</strong><br>
+                                <span style="font-size: 16px; color: ${getColorFromGrowthRate(props.growth_rate)}; font-weight: 700;">+${props.growth_rate}%</span>
                             `, {
-                                maxWidth: 300,
-                                className: 'custom-popup'
+                                maxWidth: 300
                             });
                         }
                     }).addTo(map);
-                    currentLayers.push(markerLayer);
                     
                     // Hide loading
                     document.getElementById('loading').style.display = 'none';
                 })
                 .catch(error => {
                     console.error('Error loading data:', error);
-                    document.getElementById('loading').innerHTML = '❌ Error loading data. Please make sure GeoJSON files exist in the data folder.';
+                    document.getElementById('loading').innerHTML = '❌ Error loading data. Check console for details.';
                     document.getElementById('loading').style.background = '#e74c3c';
                     document.getElementById('loading').style.color = 'white';
                 });
