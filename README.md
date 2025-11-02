@@ -2,7 +2,7 @@ Case Comp Team Salvador:
 
 Teammates:
 - Nicolas Slenko
-- Zhichang Lee
+- Zhicheng Li 
 - Aman Vyas
-- Janna 
+- Ananda Chatterjee
 - Elizabeth Jang
