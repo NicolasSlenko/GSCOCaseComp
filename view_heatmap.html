@@ -347,29 +347,28 @@
         // Image mapping for venues, airports, and universities
         const imageMapping = {
             venues: {
-                'Ben Hill Griffin Stadium': 'images/ben-hill.jpg',
                 'Raymond James Stadium': 'images/raymond-james.jpg',
                 'Camping World Stadium': 'images/camping-world.jpg',
                 'Amway Center': 'images/amway.avif',
                 'Amalie Arena': 'images/amalie.jpg',
-                'O\'Connell Center': 'images/oconnell.jpg',
                 'Orange County Convention': 'images/orange-convention.jpg',
                 'TPC Sawgrass': 'images/tpc-sawgrass.jpg',
-                'UF Aquatic Center': 'images/uf-aquatic.jpg',
-                'Hard Rock Stadium': 'images/HardRock.webp'
+                'Hard Rock Stadium': 'images/HardRock.webp',
+                'Exploria Stadium': 'images/exploria.jpg',
+                'Addition Financial Arena': 'images/ucf-arena.jpg'
             },
             airports: {
                 'Orlando International Airport': 'images/mco.jpg',
                 'Tampa International Airport': 'images/tpa.jpg',
-                'Gainesville Regional Airport': 'images/gnv.jpg',
                 'Miami International Airport': 'images/miami.png',
                 'Fort Lauderdale-Hollywood': 'images/fll.jpg',
-                'Jacksonville International': 'images/jax.avif'
+                'Jacksonville International': 'images/jax.avif',
+                'Lakeland Linder International': 'images/lakeland-airport.jpg'
             },
-            universities: {
-                'University of Florida': 'images/uf.jpg',
-                'University of Central Florida': 'images/ucf.avif',
-                'University of South Florida': 'images/usf.jpg'
+            villages: {
+                'Lakeland Olympic Village': 'images/lakeland.jpg',
+                'Florida Southern College': 'images/florida-southern.jpg',
+                'Polk State College': 'images/polk-state.jpg'
             }
         };
         
@@ -414,12 +413,12 @@
             }
         }
         
-        // Initialize map centered on Florida
+        // Initialize map centered on Tampa-Orlando corridor
         function initMap() {
             map = L.map('map', {
-                center: [28.5, -82],
-                zoom: 7,
-                minZoom: 6,
+                center: [28.0, -81.8],  // Centered on Lakeland area
+                zoom: 8,
+                minZoom: 7,
                 maxZoom: 11
             });
             
@@ -461,7 +460,7 @@
                         <h4>Infrastructure Assets</h4>
                         <div class="legend-item">
                             <span class="legend-line" style="background: #004A7C;"></span>
-                            <span class="legend-text">Major Highway Corridor</span>
+                            <span class="legend-text">I-4 Corridor (Tampa-Orlando)</span>
                         </div>
                         <div class="legend-item">
                             <span style="font-size: 16px;">✈️</span>
@@ -476,16 +475,16 @@
                             <span class="legend-text" style="margin-left: 8px;">Arena Venue</span>
                         </div>
                         <div class="legend-item">
-                            <span style="font-size: 16px;">🎓</span>
-                            <span class="legend-text" style="margin-left: 8px;">University (Olympic Village Site)</span>
+                            <span style="font-size: 16px;">🏘️</span>
+                            <span class="legend-text" style="margin-left: 8px;">Olympic Village</span>
                         </div>
                     </div>
                     
                     <div class="legend-divider"></div>
                     
                     <div class="legend-item">
-                        <span class="gto-indicator">GTO</span>
-                        <span class="legend-text" style="margin-left: 8px; font-weight: 500;">Target Corridor Asset</span>
+                        <span class="gto-indicator">TO</span>
+                        <span class="legend-text" style="margin-left: 8px; font-weight: 500;">Tampa-Orlando Corridor</span>
                     </div>
                 `;
                 return div;
@@ -507,21 +506,24 @@
                     
                     highwayLayer = L.geoJSON(data, {
                         style: function(feature) {
+                            // Highlight I-4 corridor as primary
+                            const isI4 = feature.properties.name === 'I-4';
                             return {
-                                color: feature.properties.is_gto ? '#004A7C' : '#B0B7BD',
-                                weight: feature.properties.is_gto ? 4 : 2,
-                                opacity: feature.properties.is_gto ? 0.9 : 0.5,
-                                dashArray: feature.properties.is_gto ? null : '5, 5'
+                                color: isI4 ? '#004A7C' : (feature.properties.is_gto ? '#3498db' : '#B0B7BD'),
+                                weight: isI4 ? 5 : (feature.properties.is_gto ? 3 : 2),
+                                opacity: isI4 ? 1.0 : (feature.properties.is_gto ? 0.8 : 0.5),
+                                dashArray: isI4 ? null : (feature.properties.is_gto ? null : '5, 5')
                             };
                         },
                         onEachFeature: (feature, layer) => {
                             const props = feature.properties;
-                            const gtoLabel = props.is_gto ? '<span class="gto-indicator">GTO</span><br><br>' : '';
+                            const isI4 = props.name === 'I-4';
+                            const toLabel = isI4 ? '<span class="gto-indicator">TO CORRIDOR</span><br><br>' : '';
                             layer.bindPopup(`
                                 <div class="popup-body">
-                                    ${gtoLabel}
-                                    <strong style="font-size: 14px;">${props.name}</strong><br>
-                                    <span style="color: #5C5C5C; font-size: 12px;">${props.description}</span>
+                                    ${toLabel}
+                                    <strong style="font-size: 13px;">${props.name}</strong><br>
+                                    <span style="color: #5C5C5C; font-size: 11px;">${props.description}</span>
                                 </div>
                             `);
                         }
@@ -543,37 +545,28 @@
                     
                     const airports = data.features.filter(f => f.properties.type === 'airport');
                     const stadiums = data.features.filter(f => f.properties.type === 'stadium');
-                    const universities = data.features.filter(f => f.properties.type === 'university');
                     
                     // Olympic requirements descriptions for airports
                     const airportRequirements = {
-                        'Orlando International Airport': 'IOC requires 40M+ annual passengers. MCO serves 50M annually, exceeding requirements. Primary gateway for international delegations and media.',
-                        'Tampa International Airport': 'Serves 22M passengers annually. Provides western corridor access for Tampa Bay region events. Ranked #1 U.S. airport for passenger experience.',
-                        'Gainesville Regional Airport': 'Regional hub serving 1.2M passengers. Direct access to University of Florida Olympic Village and Opening/Closing Ceremony venue.',
+                        'Orlando International Airport': 'IOC requires 40M+ annual passengers. MCO serves 50M annually, exceeding requirements. Primary gateway for international delegations and media. 30-minute drive to Olympic Village.',
+                        'Tampa International Airport': 'Serves 22M passengers annually. Western corridor gateway for Tampa Bay events. Ranked #1 U.S. airport for passenger experience. 40-minute drive to Olympic Village.',
+                        'Lakeland Linder International': 'Regional airport 10 minutes from Olympic Village. Provides charter flight access for VIPs and delegations. Recently expanded terminal can handle increased traffic.',
                         'Miami International Airport': 'Secondary gateway with 46M annual passengers. Provides South Florida contingency capacity and Latin American delegation access.',
                         'Fort Lauderdale-Hollywood': 'Supplemental international hub (36M passengers). Alleviates Miami congestion during peak Olympic arrival periods.',
-                        'Jacksonville International': '6M annual passengers. Provides northern corridor access and contingency routing for golf venues.'
+                        'Jacksonville International': '6M annual passengers. Provides northern corridor access for contingency operations.'
                     };
                     
-                    // Olympic requirements descriptions for venues
+                    // Olympic requirements descriptions for venues - UPDATED
                     const venueRequirements = {
-                        'Ben Hill Griffin Stadium': 'IOC requires 80,000+ seat stadium for Opening/Closing Ceremonies. "The Swamp" provides 88,548 capacity with modern amenities, broadcast infrastructure, and integrated medical facilities. Also hosts Track & Field finals.',
-                        'Raymond James Stadium': 'Primary Soccer venue with 65,618 capacity. Recent Super Bowl host (2021) demonstrates Olympic-ready broadcast and security infrastructure. FIFA-compliant field dimensions.',
-                        'Camping World Stadium': 'Secondary Soccer venue (65,438 capacity). Renovated 2014-2017 with $207M investment. Hosts Rugby Sevens competition. Central Orlando location minimizes athlete travel.',
-                        'Amway Center': 'IOC requires 18,000+ seat arena for Basketball. Provides 18,846 capacity with NBA-grade facilities. Hosted 2012 NBA All-Star Game. Modern broadcast center and athlete amenities.',
-                        'Amalie Arena': 'Ice Hockey and Figure Skating venue (19,092 capacity). NHL Tampa Bay Lightning home arena with Olympic ice specifications. Convertible floor for multiple sports.',
-                        'O\'Connell Center': 'Gymnastics and Volleyball venue (10,500 capacity). University of Florida arena with recent $64M renovation. Existing Olympic training facilities on campus.',
-                        'Orange County Convention': 'IOC requires 200,000+ sq ft for Fencing, Wrestling, Boxing, and Taekwondo. Provides 2.1M sq ft with modular layout. Broadcast Center location allows rapid media access.',
+                        'Camping World Stadium': 'IOC requires 80,000+ seat stadium for Opening/Closing Ceremonies. EXPANDED to 80,438 capacity (+15,000 seats) specifically for Olympics. Recent $207M renovation provides Olympic-ready broadcast and security infrastructure. Also hosts Track & Field finals. Central Orlando location 25 minutes from Olympic Village.',
+                        'Raymond James Stadium': 'Primary Soccer venue with 65,618 capacity. Recent Super Bowl host (2021) demonstrates Olympic-ready broadcast and security infrastructure. FIFA-compliant field dimensions. 35-minute drive from Olympic Village.',
+                        'Amway Center': 'IOC requires 18,000+ seat arena for Basketball. Provides 18,846 capacity with NBA-grade facilities. Hosted 2012 NBA All-Star Game. Modern broadcast center and athlete amenities. Downtown Orlando location 20 minutes from Village.',
+                        'Amalie Arena': 'Ice Hockey and Figure Skating venue (19,092 capacity). NHL Tampa Bay Lightning home arena with Olympic ice specifications. Convertible floor for multiple sports. 40-minute drive from Village.',
+                        'Orange County Convention': 'IOC requires 200,000+ sq ft for Fencing, Wrestling, Boxing, and Taekwondo. Provides 2.1M sq ft with modular layout. Broadcast Center location allows rapid media access. Adjacent to MCO airport.',
+                        'Exploria Stadium': 'Olympic Soccer preliminary matches (25,500 capacity). MLS Orlando City SC home venue. Opened 2017 with modern amenities. Downtown Orlando location ideal for spectator access.',
+                        'Addition Financial Arena': 'Gymnastics and Volleyball venue (10,000 capacity). UCF campus arena with modern facilities. 25-minute drive from Olympic Village.',
                         'TPC Sawgrass': 'Olympic Golf venue hosting PGA Tour\'s THE PLAYERS Championship. Stadium Course meets IOC specifications with 18,000+ spectator capacity. Proven international broadcast infrastructure.',
-                        'UF Aquatic Center': 'Olympic Swimming, Diving, and Water Polo venue. 50-meter competition pool with FINA specifications. Adjacent diving well and warm-up pools. University medical facilities on-site.',
                         'Hard Rock Stadium': 'Contingency venue (65,326 capacity) and preliminary Soccer matches. Recent $550M renovation. Retractable canopy protects from Florida weather. Hosted Super Bowl LIV (2020).'
-                    };
-                    
-                    // Olympic requirements descriptions for universities
-                    const universityRequirements = {
-                        'University of Florida': 'Primary Olympic Village (12,000+ beds). IOC requires integrated dining, medical, and training facilities — UF provides on-campus hospital, athlete training center, and 10 dining halls. 55,000 students ensure post-Olympic housing demand.',
-                        'University of Central Florida': 'Secondary Village (11,000+ beds) serving Orlando metro venues. Nation\'s second-largest university with extensive recreation facilities. 15-minute drive to Amway Center and Convention Center broadcast hub.',
-                        'University of South Florida': 'Tertiary Village (7,000+ beds) for Tampa region athletes. Adjacent to USF Health Morsani College of Medicine. 20-minute drive to Raymond James Stadium and Amalie Arena.'
                     };
                     
                     // Create airport layer with images and requirements
@@ -590,7 +583,8 @@
                         onEachFeature: (feature, layer) => {
                             const props = feature.properties;
                             const imagePath = imageMapping.airports[props.name];
-                            const gtoLabel = props.is_gto ? '<span class="gto-indicator">GTO</span>' : '';
+                            const isTOCorridor = ['Orlando International Airport', 'Tampa International Airport', 'Lakeland Linder International'].includes(props.name);
+                            const toLabel = isTOCorridor ? '<span class="gto-indicator">TO</span>' : '';
                             const requirement = airportRequirements[props.name] || 'Provides regional air connectivity for Olympic operations.';
                             
                             const imageHtml = imagePath ? `<img src="${imagePath}" class="popup-image" alt="${props.name}" onerror="this.style.display='none'">` : '';
@@ -598,19 +592,19 @@
                             layer.bindPopup(`
                                 ${imageHtml}
                                 <div class="popup-body">
-                                    ${gtoLabel ? gtoLabel + '<br><br>' : ''}
-                                    <strong style="font-size: 16px;">✈️ ${props.name}</strong><br>
+                                    ${toLabel ? toLabel + '<br><br>' : ''}
+                                    <strong style="font-size: 13px;">✈️ ${props.name}</strong><br>
                                     <div class="popup-label">AIRPORT CODE</div>
-                                    <div style="color: #004A7C; font-weight: 600; font-size: 18px;">${props.code}</div>
+                                    <div style="color: #004A7C; font-weight: 600; font-size: 16px;">${props.code}</div>
                                     <div class="popup-label">ANNUAL PASSENGERS</div>
-                                    <div style="color: #333333; font-weight: 500;">${props.size}</div>
-                                    <div class="popup-label" style="margin-top: 12px;">OLYMPIC REQUIREMENT ALIGNMENT</div>
-                                    <div style="color: #333333; font-size: 12px; line-height: 1.5; background: #F8F9FA; padding: 10px; border-radius: 6px; margin-top: 4px;">
+                                    <div style="color: #333333; font-weight: 500; font-size: 11px;">${props.size}</div>
+                                    <div class="popup-label" style="margin-top: 8px;">OLYMPIC ALIGNMENT</div>
+                                    <div style="color: #333333; font-size: 10px; line-height: 1.4; background: #F8F9FA; padding: 8px; border-radius: 4px; margin-top: 3px;">
                                         ${requirement}
                                     </div>
                                 </div>
                             `, {
-                                maxWidth: 380,
+                                maxWidth: 260,
                                 className: 'custom-popup'
                             });
                         }
@@ -631,8 +625,9 @@
                         onEachFeature: (feature, layer) => {
                             const props = feature.properties;
                             const imagePath = imageMapping.venues[props.name];
-                            const gtoLabel = props.is_gto ? '<span class="gto-indicator">GTO</span>' : '';
-                            const olympicReady = props.olympic_ready ? '<div style="color: #27ae60; font-weight: 500; margin-top: 8px;">✓ Olympic-Ready Venue</div>' : '';
+                            const isTOCorridor = ['Camping World Stadium', 'Raymond James Stadium', 'Amway Center', 'Amalie Arena', 'Exploria Stadium', 'Addition Financial Arena', 'Orange County Convention'].includes(props.name);
+                            const toLabel = isTOCorridor ? '<span class="gto-indicator">TO</span>' : '';
+                            const olympicReady = props.olympic_ready ? '<div style="color: #27ae60; font-weight: 500; margin-top: 6px;">✓ Olympic-Ready Venue</div>' : '';
                             const requirement = venueRequirements[props.name] || 'Meets IOC venue standards for Olympic competition.';
                             
                             const imageHtml = imagePath ? `<img src="${imagePath}" class="popup-image" alt="${props.name}" onerror="this.style.display='none'">` : '';
@@ -640,72 +635,123 @@
                             layer.bindPopup(`
                                 ${imageHtml}
                                 <div class="popup-body">
-                                    ${gtoLabel ? gtoLabel + '<br><br>' : ''}
-                                    <strong style="font-size: 16px;">${props.name}</strong><br>
-                                    <div style="color: #5C5C5C; font-size: 12px; margin-top: 4px;">${props.location}</div>
+                                    ${toLabel ? toLabel + '<br><br>' : ''}
+                                    <strong style="font-size: 13px;">${props.name}</strong><br>
+                                    <div style="color: #5C5C5C; font-size: 10px; margin-top: 3px;">${props.location}</div>
                                     <div class="popup-label">CAPACITY</div>
                                     <div class="popup-metric">${props.capacity.toLocaleString()}</div>
                                     <div class="popup-label">VENUE TYPE</div>
-                                    <div style="color: #333333;">${props.stadium_type}</div>
+                                    <div style="color: #333333; font-size: 11px;">${props.stadium_type}</div>
                                     ${olympicReady}
-                                    <div class="popup-label" style="margin-top: 12px;">OLYMPIC REQUIREMENT ALIGNMENT</div>
-                                    <div style="color: #333333; font-size: 12px; line-height: 1.5; background: #F8F9FA; padding: 10px; border-radius: 6px; margin-top: 4px;">
+                                    <div class="popup-label" style="margin-top: 8px;">OLYMPIC ALIGNMENT</div>
+                                    <div style="color: #333333; font-size: 10px; line-height: 1.4; background: #F8F9FA; padding: 8px; border-radius: 4px; margin-top: 3px;">
                                         ${requirement}
                                     </div>
                                 </div>
                             `, {
-                                maxWidth: 400,
+                                maxWidth: 260,
                                 className: 'custom-popup'
                             });
                         }
                     });
                     
-                    // Create university layer with images and requirements
-                    infrastructureLayers.universities = L.geoJSON(universities, {
-                        pointToLayer: (feature, latlng) => {
-                            return L.marker(latlng, {
-                                icon: L.divIcon({
-                                    className: 'custom-icon',
-                                    html: '<div style="font-size: 22px;">🎓</div>',
-                                    iconSize: [28, 28]
-                                })
-                            });
+                    // Create LAKELAND Olympic Village layer
+                    const lakelandVillage = {
+                        "type": "FeatureCollection",
+                        "features": [
+                            {
+                                "type": "Feature",
+                                "properties": {
+                                    "name": "Lakeland Olympic Village",
+                                    "location": "Lakeland, Polk County",
+                                    "beds": 15000,
+                                    "type": "Primary Village"
+                            },
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [-81.9498, 28.0395]
+                            }
                         },
-                        onEachFeature: (feature, layer) => {
-                            const props = feature.properties;
-                            const imagePath = imageMapping.universities[props.name];
-                            const gtoLabel = props.is_gto ? '<span class="gto-indicator">GTO</span>' : '';
-                            const requirement = universityRequirements[props.name] || 'Provides athlete accommodation with integrated dining and medical facilities.';
-                            
-                            const imageHtml = imagePath ? `<img src="${imagePath}" class="popup-image" alt="${props.name}" onerror="this.style.display='none'">` : '';
-                            
-                            layer.bindPopup(`
-                                ${imageHtml}
-                                <div class="popup-body">
-                                    ${gtoLabel ? gtoLabel + '<br><br>' : ''}
-                                    <strong style="font-size: 16px;">🎓 ${props.name}</strong><br>
-                                    <div style="color: #5C5C5C; font-size: 12px; margin-top: 4px;">${props.location}</div>
-                                    <div class="popup-label">ENROLLMENT</div>
-                                    <div class="popup-metric">${props.students.toLocaleString()}</div>
-                                    <div class="popup-label">OLYMPIC ROLE</div>
-                                    <div style="color: #004A7C; font-weight: 500;">Olympic Village Site</div>
-                                    <div class="popup-label" style="margin-top: 12px;">OLYMPIC REQUIREMENT ALIGNMENT</div>
-                                    <div style="color: #333333; font-size: 12px; line-height: 1.5; background: #F8F9FA; padding: 10px; border-radius: 6px; margin-top: 4px;">
-                                        ${requirement}
-                                    </div>
-                                </div>
-                            `, {
-                                maxWidth: 400,
-                                className: 'custom-popup'
-                            });
+                        {
+                            "type": "Feature",
+                            "properties": {
+                                "name": "Florida Southern College",
+                                "location": "Lakeland",
+                                "beds": 2500,
+                                "type": "Supplemental Housing"
+                            },
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [-81.9476, 28.0217]
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "properties": {
+                                "name": "Polk State College",
+                                "location": "Lakeland",
+                                "beds": 1500,
+                                "type": "Supplemental Housing"
+                            },
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [-81.9812, 28.0614]
+                            }
                         }
-                    });
-                    
-                    console.log('Infrastructure layers created');
-                })
-                .catch(error => {
-                    console.error('Error loading infrastructure:', error);
+                    ]
+                };
+                
+                infrastructureLayers.universities = L.geoJSON(lakelandVillage, {
+                    pointToLayer: (feature, latlng) => {
+                        return L.marker(latlng, {
+                            icon: L.divIcon({
+                                className: 'custom-icon',
+                                html: '<div style="font-size: 24px;">🏘️</div>',
+                                iconSize: [30, 30]
+                            })
+                        });
+                    },
+                    onEachFeature: (feature, layer) => {
+                        const props = feature.properties;
+                        const imagePath = imageMapping.villages[props.name];
+                        const isPrimary = props.type === 'Primary Village';
+                        
+                        let requirement;
+                        if (isPrimary) {
+                            requirement = 'IOC requires 15,000+ athlete beds with integrated dining, medical, and training facilities. Lakeland Village provides new construction with: Olympic-grade dining halls, 24/7 medical center, training facilities, and recreation areas. Midpoint location (35 min to Tampa, 25 min to Orlando) minimizes athlete travel. Post-Olympic conversion to workforce housing for Polk County\'s 12% population growth.';
+                        } else {
+                            requirement = `Supplemental housing providing ${props.beds.toLocaleString()} beds for overflow and support staff. Existing campus infrastructure with dining and medical facilities. 10-minute drive to main Olympic Village.`;
+                        }
+                        
+                        const imageHtml = imagePath ? `<img src="${imagePath}" class="popup-image" alt="${props.name}" onerror="this.style.display='none'">` : '';
+                        
+                        layer.bindPopup(`
+                            ${imageHtml}
+                            <div class="popup-body">
+                                <span class="gto-indicator">TO</span><br><br>
+                                <strong style="font-size: 13px;">🏘️ ${props.name}</strong><br>
+                                <div style="color: #5C5C5C; font-size: 10px; margin-top: 3px;">${props.location}</div>
+                                <div class="popup-label">ATHLETE BEDS</div>
+                                <div class="popup-metric">${props.beds.toLocaleString()}</div>
+                                <div class="popup-label">FACILITY TYPE</div>
+                                <div style="color: #004A7C; font-weight: 500; font-size: 11px;">${props.type}</div>
+                                <div class="popup-label" style="margin-top: 8px;">OLYMPIC ALIGNMENT</div>
+                                <div style="color: #333333; font-size: 10px; line-height: 1.4; background: #F8F9FA; padding: 8px; border-radius: 4px; margin-top: 3px;">
+                                    ${requirement}
+                                </div>
+                            </div>
+                        `, {
+                            maxWidth: 260,
+                            className: 'custom-popup'
+                        });
+                    }
                 });
+                
+                console.log('Infrastructure layers created');
+            })
+            .catch(error => {
+                console.error('Error loading infrastructure:', error);
+            });
         }
         
         // Load population data
@@ -721,6 +767,17 @@
                 })
                 .then(data => {
                     console.log('Loaded population data:', data.features.length, 'counties');
+                    
+                    // Update TO corridor counties (remove Alachua, add Polk)
+                    data.features = data.features.map(f => {
+                        if (f.properties.county === 'Polk') {
+                            f.properties.is_gto = true;
+                        }
+                        if (f.properties.county === 'Alachua') {
+                            f.properties.is_gto = false;
+                        }
+                        return f;
+                    });
                     
                     // Create heatmap points
                     const heatPoints = data.features.map(f => {
@@ -759,38 +816,38 @@
                     // Add county markers
                     countyMarkersLayer = L.geoJSON(data, {
                         pointToLayer: (feature, latlng) => {
-                            const isGTO = feature.properties.is_gto;
+                            const isTO = feature.properties.is_gto;
                             const growthRate = feature.properties.growth_rate;
                             const fillColor = getColorFromGrowthRate(growthRate);
                             
                             return L.circleMarker(latlng, {
-                                radius: isGTO ? 10 : 5,
+                                radius: isTO ? 10 : 5,
                                 fillColor: fillColor,
-                                color: isGTO ? "#0B2239" : "#333333",
-                                weight: isGTO ? 3 : 1,
+                                color: isTO ? "#0B2239" : "#333333",
+                                weight: isTO ? 3 : 1,
                                 opacity: 1,
                                 fillOpacity: 0.85
                             });
                         },
                         onEachFeature: (feature, layer) => {
                             const props = feature.properties;
-                            const gtoLabel = props.is_gto ? '<span class="gto-indicator">GTO CORRIDOR</span><br><br>' : '';
+                            const toLabel = props.is_gto ? '<span class="gto-indicator">TO CORRIDOR</span><br><br>' : '';
                             
                             layer.bindPopup(`
                                 <div class="popup-body">
-                                    ${gtoLabel}
-                                    <strong style="font-size: 15px; color: #0B2239;">${props.county} County</strong><br>
-                                    <div style="margin-top: 12px;">
+                                    ${toLabel}
+                                    <strong style="font-size: 13px; color: #0B2239;">${props.county} County</strong><br>
+                                    <div style="margin-top: 8px;">
                                         <div class="popup-label">2045 POPULATION</div>
                                         <div class="popup-metric">${props.population.toLocaleString()}</div>
                                     </div>
-                                    <div style="margin-top: 12px;">
+                                    <div style="margin-top: 8px;">
                                         <div class="popup-label">10-YEAR GROWTH (2035-2045)</div>
-                                        <div style="color: ${getColorFromGrowthRate(props.growth_rate)}; font-size: 20px; font-weight: 700;">+${props.growth_rate}%</div>
+                                        <div style="color: ${getColorFromGrowthRate(props.growth_rate)}; font-size: 18px; font-weight: 700;">+${props.growth_rate}%</div>
                                     </div>
                                 </div>
                             `, {
-                                maxWidth: 280
+                                maxWidth: 220
                             });
                         }
                     }).addTo(map);

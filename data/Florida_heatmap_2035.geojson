@@ -14,9 +14,8 @@
         "county": "ALACHUA",
         "population": 329300,
         "growth_rate": 4.95,
-        "intensity": 0.5,
-        "is_gto": true,
-        "layer": "population"
+        "intensity": 0.25,
+        "is_gto": true
       }
     },
     {
@@ -33,8 +32,7 @@
         "population": 31300,
         "growth_rate": 5.11,
         "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -50,9 +48,8 @@
         "county": "BAY",
         "population": 205100,
         "growth_rate": 4.88,
-        "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.25,
+        "is_gto": false
       }
     },
     {
@@ -69,8 +66,7 @@
         "population": 28600,
         "growth_rate": 2.1,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -87,8 +83,7 @@
         "population": 724600,
         "growth_rate": 5.95,
         "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -105,8 +100,7 @@
         "population": 2125800,
         "growth_rate": 2.99,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -123,8 +117,7 @@
         "population": 13900,
         "growth_rate": 0.0,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -140,9 +133,8 @@
         "county": "CHARLOTTE",
         "population": 240000,
         "growth_rate": 9.0,
-        "intensity": 0.75,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.5,
+        "is_gto": false
       }
     },
     {
@@ -159,8 +151,7 @@
         "population": 182400,
         "growth_rate": 5.43,
         "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -177,8 +168,7 @@
         "population": 267900,
         "growth_rate": 6.08,
         "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -194,9 +184,8 @@
         "county": "COLLIER",
         "population": 466000,
         "growth_rate": 7.15,
-        "intensity": 0.75,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.5,
+        "is_gto": false
       }
     },
     {
@@ -213,8 +202,7 @@
         "population": 77100,
         "growth_rate": 3.5,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -231,8 +219,7 @@
         "population": 35800,
         "growth_rate": 0.84,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -249,8 +236,7 @@
         "population": 18400,
         "growth_rate": 2.72,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -267,8 +253,7 @@
         "population": 1198100,
         "growth_rate": 5.62,
         "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -285,8 +270,7 @@
         "population": 357500,
         "growth_rate": 3.78,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -302,9 +286,8 @@
         "county": "FLAGLER",
         "population": 166700,
         "growth_rate": 12.72,
-        "intensity": 1.0,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.75,
+        "is_gto": false
       }
     },
     {
@@ -321,8 +304,7 @@
         "population": 14700,
         "growth_rate": 5.44,
         "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -339,8 +321,7 @@
         "population": 44700,
         "growth_rate": 0.22,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -357,8 +338,7 @@
         "population": 21400,
         "growth_rate": 6.07,
         "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -375,8 +355,7 @@
         "population": 13000,
         "growth_rate": 1.54,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -393,8 +372,7 @@
         "population": 18100,
         "growth_rate": 5.52,
         "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -411,8 +389,7 @@
         "population": 14100,
         "growth_rate": 1.42,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -429,8 +406,7 @@
         "population": 25800,
         "growth_rate": 0.39,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -447,8 +423,7 @@
         "population": 43400,
         "growth_rate": 2.53,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -465,8 +440,7 @@
         "population": 233400,
         "growth_rate": 5.87,
         "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -483,8 +457,7 @@
         "population": 110300,
         "growth_rate": 2.9,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -501,8 +474,7 @@
         "population": 1795300,
         "growth_rate": 6.66,
         "intensity": 0.5,
-        "is_gto": true,
-        "layer": "population"
+        "is_gto": true
       }
     },
     {
@@ -519,8 +491,7 @@
         "population": 20200,
         "growth_rate": 0.5,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -537,8 +508,7 @@
         "population": 193100,
         "growth_rate": 5.7,
         "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -555,8 +525,7 @@
         "population": 50300,
         "growth_rate": 1.19,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -573,8 +542,7 @@
         "population": 16300,
         "growth_rate": 3.07,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -591,8 +559,7 @@
         "population": 8600,
         "growth_rate": 2.33,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -608,9 +575,8 @@
         "county": "LAKE",
         "population": 513600,
         "growth_rate": 10.26,
-        "intensity": 1.0,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.75,
+        "is_gto": false
       }
     },
     {
@@ -626,9 +592,8 @@
         "county": "LEE",
         "population": 964400,
         "growth_rate": 8.09,
-        "intensity": 0.75,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.5,
+        "is_gto": false
       }
     },
     {
@@ -645,8 +610,7 @@
         "population": 326100,
         "growth_rate": 3.74,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -663,8 +627,7 @@
         "population": 50000,
         "growth_rate": 5.0,
         "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -681,8 +644,7 @@
         "population": 8200,
         "growth_rate": 1.22,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -699,8 +661,7 @@
         "population": 18900,
         "growth_rate": 0.0,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -716,9 +677,8 @@
         "county": "MANATEE",
         "population": 540100,
         "growth_rate": 9.65,
-        "intensity": 0.75,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.5,
+        "is_gto": false
       }
     },
     {
@@ -734,9 +694,8 @@
         "county": "MARION",
         "population": 471100,
         "growth_rate": 8.3,
-        "intensity": 0.75,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.5,
+        "is_gto": false
       }
     },
     {
@@ -752,9 +711,8 @@
         "county": "MARTIN",
         "population": 177400,
         "growth_rate": 4.11,
-        "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.25,
+        "is_gto": false
       }
     },
     {
@@ -771,8 +729,7 @@
         "population": 2981000,
         "growth_rate": 3.43,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -789,8 +746,7 @@
         "population": 88100,
         "growth_rate": 0.91,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -806,9 +762,8 @@
         "county": "NASSAU",
         "population": 125700,
         "growth_rate": 11.3,
-        "intensity": 1.0,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.75,
+        "is_gto": false
       }
     },
     {
@@ -825,8 +780,7 @@
         "population": 245200,
         "growth_rate": 5.02,
         "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -843,8 +797,7 @@
         "population": 40300,
         "growth_rate": 0.74,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -860,9 +813,8 @@
         "county": "ORANGE",
         "population": 1755300,
         "growth_rate": 7.24,
-        "intensity": 0.75,
-        "is_gto": true,
-        "layer": "population"
+        "intensity": 0.5,
+        "is_gto": true
       }
     },
     {
@@ -878,9 +830,8 @@
         "county": "OSCEOLA",
         "population": 582300,
         "growth_rate": 13.43,
-        "intensity": 1.0,
-        "is_gto": true,
-        "layer": "population"
+        "intensity": 0.75,
+        "is_gto": true
       }
     },
     {
@@ -896,9 +847,8 @@
         "county": "PALM BEACH",
         "population": 1700000,
         "growth_rate": 4.38,
-        "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.25,
+        "is_gto": false
       }
     },
     {
@@ -914,9 +864,8 @@
         "county": "PASCO",
         "population": 742100,
         "growth_rate": 9.18,
-        "intensity": 0.75,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.5,
+        "is_gto": false
       }
     },
     {
@@ -933,8 +882,7 @@
         "population": 1007800,
         "growth_rate": 1.8,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -950,9 +898,8 @@
         "county": "POLK",
         "population": 972600,
         "growth_rate": 9.43,
-        "intensity": 0.75,
-        "is_gto": true,
-        "layer": "population"
+        "intensity": 0.5,
+        "is_gto": true
       }
     },
     {
@@ -969,8 +916,7 @@
         "population": 78100,
         "growth_rate": 1.15,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -986,9 +932,8 @@
         "county": "SANTA ROSA",
         "population": 245900,
         "growth_rate": 9.11,
-        "intensity": 0.75,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.5,
+        "is_gto": false
       }
     },
     {
@@ -1004,9 +949,8 @@
         "county": "SARASOTA",
         "population": 536100,
         "growth_rate": 7.39,
-        "intensity": 0.75,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.5,
+        "is_gto": false
       }
     },
     {
@@ -1022,9 +966,8 @@
         "county": "SEMINOLE",
         "population": 537200,
         "growth_rate": 4.26,
-        "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.25,
+        "is_gto": false
       }
     },
     {
@@ -1040,9 +983,8 @@
         "county": "SUMTER",
         "population": 210900,
         "growth_rate": 14.84,
-        "intensity": 1.0,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.75,
+        "is_gto": false
       }
     },
     {
@@ -1059,8 +1001,7 @@
         "population": 48700,
         "growth_rate": 3.29,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -1077,8 +1018,7 @@
         "population": 22600,
         "growth_rate": 2.21,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -1094,9 +1034,8 @@
         "county": "UNION",
         "population": 17400,
         "growth_rate": 4.02,
-        "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.25,
+        "is_gto": false
       }
     },
     {
@@ -1113,8 +1052,7 @@
         "population": 657200,
         "growth_rate": 5.86,
         "intensity": 0.5,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     },
     {
@@ -1130,9 +1068,8 @@
         "county": "WAKULLA",
         "population": 42100,
         "growth_rate": 8.08,
-        "intensity": 0.75,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.5,
+        "is_gto": false
       }
     },
     {
@@ -1148,9 +1085,8 @@
         "county": "WALTON",
         "population": 106700,
         "growth_rate": 11.81,
-        "intensity": 1.0,
-        "is_gto": false,
-        "layer": "population"
+        "intensity": 0.75,
+        "is_gto": false
       }
     },
     {
@@ -1167,8 +1103,7 @@
         "population": 27100,
         "growth_rate": 2.95,
         "intensity": 0.25,
-        "is_gto": false,
-        "layer": "population"
+        "is_gto": false
       }
     }
   ]

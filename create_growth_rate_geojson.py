@@ -2,23 +2,21 @@ import pandas as pd
 import json
 import os
 
-print("=" * 60)
-print("CREATING COMBINED POPULATION + INFRASTRUCTURE DATA")
-print("=" * 60)
-
-# ========== PART 1: POPULATION DATA ==========
-print("\n[1/2] Processing Population Data...")
-
 # Load all counties data
 counties_csv = os.path.join('data', 'Florida_all_counties_2035_2045.csv')
 counties_data = pd.read_csv(counties_csv)
-
+print(counties_data.columns.tolist())
 # Calculate growth rate from 2035 to 2045
 counties_data['growth_rate'] = ((counties_data['2045'] - counties_data['2035']) / counties_data['2035']) * 100
 
-print("Top 10 counties by growth rate (2035-2045):")
-top_counties = counties_data.nlargest(10, 'growth_rate')[['County', '2035', '2045', 'growth_rate']]
+print("Top 15 counties by growth rate (2035-2045):")
+top_counties = counties_data.nlargest(15, 'growth_rate')[['County', '2035', '2045', 'growth_rate']]
 print(top_counties)
+
+print("\nGTO Triangle counties growth rates:")
+gto_counties_list = ['ALACHUA', 'ORANGE', 'HILLSBOROUGH', 'OSCEOLA', 'POLK']
+gto_data = counties_data[counties_data['County'].str.upper().isin(gto_counties_list)][['County', 'growth_rate']]
+print(gto_data)
 
 # County coordinates
 county_coords = {
@@ -94,7 +92,7 @@ county_coords = {
 # GTO Triangle counties
 gto_counties = {'ALACHUA', 'ORANGE', 'HILLSBOROUGH', 'OSCEOLA', 'POLK'}
 
-# Create GeoJSON files for each year
+# Create GeoJSON files for each year with FIXED intensity based on growth rate thresholds
 years = [2035, 2040, 2045]
 
 for year in years:
@@ -107,14 +105,15 @@ for year in years:
             growth_rate = row['growth_rate']
             
             # Map growth rate to intensity using fixed thresholds
-            if growth_rate > 10:
-                intensity = 1.0
-            elif growth_rate >= 7:
-                intensity = 0.75
-            elif growth_rate >= 4:
-                intensity = 0.5
+            # This way colors are consistent across all counties
+            if growth_rate >= 15:
+                intensity = 1.0  # Red - Highest
+            elif growth_rate >= 10:
+                intensity = 0.75  # Orange - High
+            elif growth_rate >= 5:
+                intensity = 0.5  # Green - Moderate
             else:
-                intensity = 0.25
+                intensity = 0.25  # Blue - Lower
             
             feature = {
                 "type": "Feature",
@@ -127,8 +126,7 @@ for year in years:
                     "population": int(population),
                     "growth_rate": round(growth_rate, 2),
                     "intensity": intensity,
-                    "is_gto": county in gto_counties,
-                    "layer": "population"
+                    "is_gto": county in gto_counties
                 }
             }
             features.append(feature)
@@ -143,124 +141,11 @@ for year in years:
     with open(output_path, 'w') as f:
         json.dump(geojson_data, f, indent=2)
     
-    print(f"  ✓ Created {output_path}")
+    print(f"\n✓ Created {output_path}")
 
-# ========== PART 2: INFRASTRUCTURE DATA ==========
-print("\n[2/2] Creating Infrastructure Data...")
-
-infrastructure_data = {
-    "airports": [
-        {"name": "Orlando International Airport", "code": "MCO", "coords": [28.4294, -81.3089], "size": "Major Hub", "gto": True},
-        {"name": "Tampa International Airport", "code": "TPA", "coords": [27.9755, -82.5332], "size": "Major Hub", "gto": True},
-        {"name": "Gainesville Regional Airport", "code": "GNV", "coords": [29.6900, -82.2718], "size": "Regional", "gto": True},
-        {"name": "Miami International Airport", "code": "MIA", "coords": [25.7932, -80.2906], "size": "Major Hub", "gto": False},
-        {"name": "Fort Lauderdale-Hollywood", "code": "FLL", "coords": [26.0726, -80.1527], "size": "Major Hub", "gto": False},
-        {"name": "Jacksonville International", "code": "JAX", "coords": [30.4941, -81.6879], "size": "Major Hub", "gto": False},
-    ],
-    
-    "major_stadiums": [
-        {"name": "Ben Hill Griffin Stadium", "location": "Gainesville", "coords": [29.6499, -82.3487], "capacity": 88548, "type": "Football", "gto": True, "olympic_ready": True},
-        {"name": "Raymond James Stadium", "location": "Tampa", "coords": [27.9759, -82.5033], "capacity": 65618, "type": "Football/NFL", "gto": True, "olympic_ready": True},
-        {"name": "Camping World Stadium", "location": "Orlando", "coords": [28.5392, -81.4025], "capacity": 65438, "type": "Football", "gto": True, "olympic_ready": True},
-        {"name": "Amway Center", "location": "Orlando", "coords": [28.5392, -81.3839], "capacity": 18846, "type": "Arena", "gto": True, "olympic_ready": True},
-        {"name": "Amalie Arena", "location": "Tampa", "coords": [27.9428, -82.4519], "capacity": 19092, "type": "Arena", "gto": True, "olympic_ready": True},
-        {"name": "Hard Rock Stadium", "location": "Miami Gardens", "coords": [25.9580, -80.2389], "capacity": 64767, "type": "Football/NFL", "gto": False, "olympic_ready": False},
-    ],
-    
-    "universities": [
-        {"name": "University of Florida", "location": "Gainesville", "coords": [29.6436, -82.3549], "students": 55000, "gto": True},
-        {"name": "University of South Florida", "location": "Tampa", "coords": [28.0587, -82.4139], "students": 50000, "gto": True},
-        {"name": "University of Central Florida", "location": "Orlando", "coords": [28.6024, -81.2001], "students": 68000, "gto": True},
-    ]
-}
-
-# Create infrastructure GeoJSON
-infra_features = []
-
-# Add airports
-for airport in infrastructure_data["airports"]:
-    feature = {
-        "type": "Feature",
-        "geometry": {
-            "type": "Point",
-            "coordinates": [airport["coords"][1], airport["coords"][0]]
-        },
-        "properties": {
-            "name": airport["name"],
-            "code": airport["code"],
-            "type": "airport",
-            "size": airport["size"],
-            "is_gto": airport["gto"],
-            "icon": "✈️",
-            "layer": "infrastructure"
-        }
-    }
-    infra_features.append(feature)
-
-# Add stadiums
-for stadium in infrastructure_data["major_stadiums"]:
-    feature = {
-        "type": "Feature",
-        "geometry": {
-            "type": "Point",
-            "coordinates": [stadium["coords"][1], stadium["coords"][0]]
-        },
-        "properties": {
-            "name": stadium["name"],
-            "location": stadium["location"],
-            "capacity": stadium["capacity"],
-            "type": "stadium",
-            "stadium_type": stadium["type"],
-            "is_gto": stadium["gto"],
-            "olympic_ready": stadium["olympic_ready"],
-            "icon": "🏟️" if stadium["capacity"] > 60000 else "🏢",
-            "layer": "infrastructure"
-        }
-    }
-    infra_features.append(feature)
-
-# Add universities
-for university in infrastructure_data["universities"]:
-    feature = {
-        "type": "Feature",
-        "geometry": {
-            "type": "Point",
-            "coordinates": [university["coords"][1], university["coords"][0]]
-        },
-        "properties": {
-            "name": university["name"],
-            "location": university["location"],
-            "students": university["students"],
-            "type": "university",
-            "is_gto": university["gto"],
-            "icon": "🎓",
-            "layer": "infrastructure"
-        }
-    }
-    infra_features.append(feature)
-
-infra_geojson = {
-    "type": "FeatureCollection",
-    "features": infra_features
-}
-
-# Save infrastructure GeoJSON
-infra_output = os.path.join('data', 'Florida_infrastructure.geojson')
-with open(infra_output, 'w') as f:
-    json.dump(infra_geojson, f, indent=2)
-
-print(f"  ✓ Infrastructure data created: {len(infra_features)} features")
-print(f"    - {len(infrastructure_data['airports'])} airports")
-print(f"    - {len(infrastructure_data['major_stadiums'])} stadiums")
-print(f"    - {len(infrastructure_data['universities'])} universities")
-print(f"  ✓ Saved to: {infra_output}")
-
-print("\n" + "=" * 60)
-print("✅ ALL DATA GENERATED SUCCESSFULLY!")
-print("=" * 60)
-print("\nGenerated files:")
-print("  - data/Florida_heatmap_2035.geojson")
-print("  - data/Florida_heatmap_2040.geojson")
-print("  - data/Florida_heatmap_2045.geojson")
-print("  - data/Florida_infrastructure.geojson")
-print("\nNext: Run the HTML file to see the combined visualization!")
+print("\n✓ All heatmap files updated with fixed intensity thresholds!")
+print("\nIntensity Scale:")
+print("  1.0 (Red): ≥15% growth")
+print("  0.75 (Orange): 10-15% growth")
+print("  0.5 (Green): 5-10% growth")
+print("  0.25 (Blue): <5% growth")
