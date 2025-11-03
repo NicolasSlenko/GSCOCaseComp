@@ -7,7 +7,7 @@ print("CREATING COMBINED POPULATION + INFRASTRUCTURE DATA")
 print("=" * 60)
 
 # ========== PART 1: POPULATION DATA ==========
-print("\n[1/2] Processing Population Data...")
+print("\n[1/3] Processing Population Data...")
 
 # Load all counties data
 counties_csv = os.path.join('data', 'Florida_all_counties_2035_2045.csv')
@@ -146,7 +146,7 @@ for year in years:
     print(f"  ✓ Created {output_path}")
 
 # ========== PART 2: INFRASTRUCTURE DATA ==========
-print("\n[2/2] Creating Infrastructure Data...")
+print("\n[2/3] Creating Infrastructure Data...")
 
 infrastructure_data = {
     "airports": [
@@ -253,7 +253,116 @@ print(f"  ✓ Infrastructure data created: {len(infra_features)} features")
 print(f"    - {len(infrastructure_data['airports'])} airports")
 print(f"    - {len(infrastructure_data['major_stadiums'])} stadiums")
 print(f"    - {len(infrastructure_data['universities'])} universities")
-print(f"  ✓ Saved to: {infra_output}")
+
+# ========== PART 3: HIGHWAY DATA ==========
+print("\n[3/3] Creating Highway Data...")
+
+# Major interstate highways connecting GTO Triangle
+highways = {
+    "I-4": {
+        "name": "Interstate 4",
+        "description": "Tampa to Orlando (84 miles)",
+        "gto": True,
+        "coordinates": [
+            [-82.5033, 27.9759],  # Tampa
+            [-82.4, 28.0],
+            [-82.2, 28.1],
+            [-82.0, 28.2],
+            [-81.8, 28.3],
+            [-81.6, 28.4],
+            [-81.4, 28.5],
+            [-81.3839, 28.5392]   # Orlando
+        ]
+    },
+    "I-75": {
+        "name": "Interstate 75",
+        "description": "North-South corridor through Florida",
+        "gto": True,
+        "coordinates": [
+            [-82.3487, 29.6499],  # Gainesville
+            [-82.35, 29.4],
+            [-82.36, 29.2],
+            [-82.37, 29.0],
+            [-82.38, 28.8],
+            [-82.40, 28.6],
+            [-82.43, 28.4],
+            [-82.45, 28.2],
+            [-82.47, 28.0],
+            [-82.5033, 27.9759]   # Tampa
+        ]
+    },
+    "I-95": {
+        "name": "Interstate 95",
+        "description": "East Coast connector",
+        "gto": False,
+        "coordinates": [
+            [-81.6879, 30.4941],  # Jacksonville
+            [-81.4, 30.0],
+            [-81.3, 29.5],
+            [-81.2, 29.0],
+            [-81.1, 28.5],
+            [-80.9, 28.0],
+            [-80.7, 27.5],
+            [-80.5, 27.0],
+            [-80.3, 26.5],
+            [-80.2906, 25.7932]   # Miami
+        ]
+    },
+    "FL-Turnpike": {
+        "name": "Florida's Turnpike",
+        "description": "Toll road connecting central Florida",
+        "gto": True,
+        "coordinates": [
+            [-81.3839, 28.5392],  # Orlando
+            [-81.3, 28.3],
+            [-81.2, 28.1],
+            [-81.1, 27.9],
+            [-81.0, 27.7],
+            [-80.9, 27.5],
+            [-80.8, 27.3],
+            [-80.7, 27.1],
+            [-80.6, 26.9],
+            [-80.5, 26.7],
+            [-80.4, 26.5],
+            [-80.3, 26.3],
+            [-80.2906, 25.7932]   # Miami
+        ]
+    }
+}
+
+highway_features = []
+for highway_id, highway_data in highways.items():
+    feature = {
+        "type": "Feature",
+        "geometry": {
+            "type": "LineString",
+            "coordinates": highway_data["coordinates"]
+        },
+        "properties": {
+            "name": highway_data["name"],
+            "highway_id": highway_id,
+            "description": highway_data["description"],
+            "is_gto": highway_data["gto"],
+            "type": "highway"
+        }
+    }
+    highway_features.append(feature)
+
+highway_geojson = {
+    "type": "FeatureCollection",
+    "features": highway_features
+}
+
+# Save highway GeoJSON
+highway_output = os.path.join('data', 'Florida_highways.geojson')
+with open(highway_output, 'w') as f:
+    json.dump(highway_geojson, f, indent=2)
+
+print(f"  ✓ Highway data created: {len(highway_features)} routes")
+print(f"    - I-4 (Tampa-Orlando)")
+print(f"    - I-75 (Gainesville-Tampa)")
+print(f"    - I-95 (Jacksonville-Miami)")
+print(f"    - FL Turnpike (Orlando-Miami)")
 
 print("\n" + "=" * 60)
 print("✅ ALL DATA GENERATED SUCCESSFULLY!")
@@ -263,4 +372,5 @@ print("  - data/Florida_heatmap_2035.geojson")
 print("  - data/Florida_heatmap_2040.geojson")
 print("  - data/Florida_heatmap_2045.geojson")
 print("  - data/Florida_infrastructure.geojson")
-print("\nNext: Run the HTML file to see the combined visualization!")
+print("  - data/Florida_highways.geojson")
+print("\nNext: Update HTML to display highways!")
