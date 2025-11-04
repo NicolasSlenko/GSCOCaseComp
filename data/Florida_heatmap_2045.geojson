@@ -15,7 +15,7 @@
         "population": 345600,
         "growth_rate": 4.95,
         "intensity": 0.25,
-        "is_gto": true
+        "is_gto": false
       }
     },
     {

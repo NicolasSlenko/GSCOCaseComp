@@ -53,7 +53,7 @@
         "code": "GNV",
         "type": "airport",
         "size": "Regional",
-        "is_gto": true,
+        "is_gto": false,
         "icon": "\u2708\ufe0f",
         "layer": "infrastructure"
       }
@@ -130,8 +130,8 @@
         "capacity": 88548,
         "type": "stadium",
         "stadium_type": "Football",
-        "is_gto": true,
-        "olympic_ready": true,
+        "is_gto": false,
+        "olympic_ready": false,
         "icon": "\ud83c\udfdf\ufe0f",
         "layer": "infrastructure"
       }
