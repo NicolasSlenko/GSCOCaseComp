@@ -145,6 +145,36 @@
             max-height: 500px;
             overflow-y: auto;
             border: 1px solid #D9D9D9;
+            transition: all 0.3s ease;
+        }
+        
+        .legend.collapsed {
+            padding: 8px;
+            max-height: 40px;
+            overflow: hidden;
+        }
+        
+        .legend.collapsed .legend-content {
+            display: none;
+        }
+        
+        .legend-toggle {
+            background: #004A7C;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        
+        .legend-toggle:hover {
+            background: #003660;
         }
         
         .legend h4 {
@@ -155,6 +185,41 @@
             padding-bottom: 12px;
             border-bottom: 1px solid #D9D9D9;
             letter-spacing: 0.3px;
+        }
+        
+        /* Mobile responsive legend */
+        @media (max-width: 768px) {
+            .legend {
+                max-width: 90vw;
+                max-height: 40vh;
+                font-size: 11px;
+                padding: 16px;
+            }
+            
+            .legend h4 {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            
+            .legend-item {
+                margin: 6px 0;
+            }
+            
+            .legend-text {
+                font-size: 10px;
+            }
+            
+            .legend-color {
+                width: 16px;
+                height: 16px;
+                margin-right: 8px;
+            }
+            
+            .legend-line {
+                width: 24px;
+                height: 2px;
+                margin-right: 8px;
+            }
         }
         
         .legend-section {
@@ -436,57 +501,60 @@
             legendControl.onAdd = function() {
                 const div = L.DomUtil.create('div', 'legend');
                 div.innerHTML = `
-                    <div class="legend-section">
-                        <h4>Population Growth Rate (2035-2045)</h4>
-                        <div class="legend-item">
-                            <span class="legend-color" style="background: #004A7C;"></span>
-                            <span class="legend-text">>10% — Highest Growth</span>
+                    <button class="legend-toggle" onclick="this.parentElement.classList.toggle('collapsed'); this.textContent = this.parentElement.classList.contains('collapsed') ? 'Show Legend ▼' : 'Hide Legend ▲';">Hide Legend ▲</button>
+                    <div class="legend-content">
+                        <div class="legend-section">
+                            <h4>Population Growth Rate (2035-2045)</h4>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #004A7C;"></span>
+                                <span class="legend-text">>10% — Highest Growth</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #3498db;"></span>
+                                <span class="legend-text">7–10% — High Growth</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #B0B7BD;"></span>
+                                <span class="legend-text">4–7% — Moderate Growth</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #D9D9D9;"></span>
+                                <span class="legend-text"><4% — Lower Growth</span>
+                            </div>
                         </div>
-                        <div class="legend-item">
-                            <span class="legend-color" style="background: #3498db;"></span>
-                            <span class="legend-text">7–10% — High Growth</span>
+                        
+                        <div class="legend-divider"></div>
+                        
+                        <div class="legend-section">
+                            <h4>Infrastructure Assets</h4>
+                            <div class="legend-item">
+                                <span class="legend-line" style="background: #004A7C;"></span>
+                                <span class="legend-text">I-4 Corridor (Tampa-Orlando)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span style="font-size: 16px;">✈️</span>
+                                <span class="legend-text" style="margin-left: 8px;">Regional Airport</span>
+                            </div>
+                            <div class="legend-item">
+                                <span style="font-size: 16px;">🏟️</span>
+                                <span class="legend-text" style="margin-left: 8px;">Major Stadium (60k+ capacity)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span style="font-size: 16px;">🏢</span>
+                                <span class="legend-text" style="margin-left: 8px;">Arena Venue</span>
+                            </div>
+                            <div class="legend-item">
+                                <span style="font-size: 16px;">🏘️</span>
+                                <span class="legend-text" style="margin-left: 8px;">Olympic Village</span>
+                            </div>
                         </div>
+                        
+                        <div class="legend-divider"></div>
+                        
                         <div class="legend-item">
-                            <span class="legend-color" style="background: #B0B7BD;"></span>
-                            <span class="legend-text">4–7% — Moderate Growth</span>
+                            <span class="gto-indicator">TO</span>
+                            <span class="legend-text" style="margin-left: 8px; font-weight: 500;">Tampa-Orlando Corridor</span>
                         </div>
-                        <div class="legend-item">
-                            <span class="legend-color" style="background: #D9D9D9;"></span>
-                            <span class="legend-text"><4% — Lower Growth</span>
-                        </div>
-                    </div>
-                    
-                    <div class="legend-divider"></div>
-                    
-                    <div class="legend-section">
-                        <h4>Infrastructure Assets</h4>
-                        <div class="legend-item">
-                            <span class="legend-line" style="background: #004A7C;"></span>
-                            <span class="legend-text">I-4 Corridor (Tampa-Orlando)</span>
-                        </div>
-                        <div class="legend-item">
-                            <span style="font-size: 16px;">✈️</span>
-                            <span class="legend-text" style="margin-left: 8px;">Regional Airport</span>
-                        </div>
-                        <div class="legend-item">
-                            <span style="font-size: 16px;">🏟️</span>
-                            <span class="legend-text" style="margin-left: 8px;">Major Stadium (60k+ capacity)</span>
-                        </div>
-                        <div class="legend-item">
-                            <span style="font-size: 16px;">🏢</span>
-                            <span class="legend-text" style="margin-left: 8px;">Arena Venue</span>
-                        </div>
-                        <div class="legend-item">
-                            <span style="font-size: 16px;">🏘️</span>
-                            <span class="legend-text" style="margin-left: 8px;">Olympic Village</span>
-                        </div>
-                    </div>
-                    
-                    <div class="legend-divider"></div>
-                    
-                    <div class="legend-item">
-                        <span class="gto-indicator">TO</span>
-                        <span class="legend-text" style="margin-left: 8px; font-weight: 500;">Tampa-Orlando Corridor</span>
                     </div>
                 `;
                 return div;
