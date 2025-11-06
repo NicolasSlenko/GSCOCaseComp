@@ -226,13 +226,137 @@
             font-size: 12px;
         }
         
+        /* Mobile Responsive Styles */
         @media (max-width: 768px) {
+            /* Header */
+            .header {
+                padding: 24px 16px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .header p {
+                font-size: 14px;
+            }
+            
+            .header .subtitle {
+                font-size: 12px;
+            }
+            
+            /* Container */
             .container {
                 padding: 24px 16px;
             }
             
+            /* Section */
+            .section {
+                padding: 20px 16px;
+                margin-bottom: 20px;
+            }
+            
+            .section-header {
+                font-size: 18px;
+                margin-bottom: 16px;
+            }
+            
+            /* KPI Grid - Stack vertically */
             .kpi-grid {
                 grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .kpi-card {
+                padding: 16px;
+            }
+            
+            .kpi-value {
+                font-size: 24px;
+            }
+            
+            .kpi-label {
+                font-size: 11px;
+            }
+            
+            /* Tables - Responsive */
+            .data-table {
+                font-size: 11px;
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .data-table th,
+            .data-table td {
+                padding: 8px;
+                font-size: 11px;
+            }
+            
+            /* Info boxes */
+            .info-box,
+            .warning-box {
+                padding: 12px;
+                font-size: 12px;
+                margin: 12px 0;
+            }
+            
+            /* Highlights */
+            .highlight,
+            .highlight-green {
+                font-size: 11px;
+                padding: 2px 6px;
+            }
+            
+            /* Comparison charts */
+            .comparison-chart {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .bar {
+                height: 28px;
+                font-size: 11px;
+                padding-left: 8px;
+            }
+            
+            .bar-label {
+                font-size: 11px;
+            }
+            
+            /* Footer */
+            .footer {
+                padding: 20px 16px;
+                font-size: 11px;
+            }
+        }
+        
+        /* Small phones */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 20px;
+            }
+            
+            .header p {
+                font-size: 13px;
+            }
+            
+            .section {
+                padding: 16px 12px;
+            }
+            
+            .section-header {
+                font-size: 16px;
+            }
+            
+            .kpi-value {
+                font-size: 20px;
+            }
+            
+            .data-table th,
+            .data-table td {
+                padding: 6px;
+                font-size: 10px;
             }
         }
     </style>
