@@ -181,6 +181,97 @@ st.markdown("""
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
+    
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+        /* Headers */
+        .main-header {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sub-header {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Decision banner */
+        .decision-banner {
+            font-size: 1.2rem;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        /* Metric cards */
+        .metric-card {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        [data-testid="stMetricValue"] {
+            font-size: 1.3rem;
+        }
+        
+        [data-testid="stMetricLabel"] {
+            font-size: 0.75rem;
+        }
+        
+        /* Columns - stack vertically on mobile */
+        [data-testid="column"] {
+            width: 100% !important;
+            flex: 100% !important;
+            min-width: 100% !important;
+            margin-bottom: 1rem;
+        }
+        
+        /* Plotly charts - make them scrollable if needed */
+        .js-plotly-plot {
+            width: 100% !important;
+            overflow-x: auto;
+        }
+        
+        /* Sidebar full width on mobile when open */
+        section[data-testid="stSidebar"] {
+            width: 100% !important;
+        }
+        
+        /* Tabs text smaller */
+        .stTabs [data-baseweb="tab"] {
+            font-size: 0.85rem;
+            padding: 0.5rem 0.75rem;
+        }
+        
+        /* Tables responsive */
+        table {
+            font-size: 0.75rem;
+        }
+        
+        /* Expander headers */
+        .streamlit-expanderHeader {
+            font-size: 0.9rem;
+        }
+    }
+    
+    /* Small mobile devices */
+    @media (max-width: 480px) {
+        .main-header {
+            font-size: 1.2rem;
+        }
+        
+        .decision-banner {
+            font-size: 1rem;
+            padding: 0.75rem;
+        }
+        
+        [data-testid="stMetricValue"] {
+            font-size: 1.1rem;
+        }
+        
+        .stTabs [data-baseweb="tab"] {
+            font-size: 0.75rem;
+            padding: 0.4rem 0.5rem;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -497,8 +588,17 @@ def create_mckinsey_chart(fig):
             showline=True,
             linewidth=1,
             linecolor=MCKINSEY_COLORS['light_gray']
-        )
+        ),
+        autosize=True,
+        height=None
     )
+    
+    # Mobile-specific adjustments
+    fig.update_layout(
+        modebar=dict(orientation='v', bgcolor='rgba(255,255,255,0.7)'),
+        dragmode='pan'
+    )
+    
     return fig
 
 # Main application
