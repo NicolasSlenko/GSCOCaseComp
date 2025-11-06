@@ -1,0 +1,302 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.3089,
+          28.4294
+        ]
+      },
+      "properties": {
+        "name": "Orlando International Airport",
+        "code": "MCO",
+        "type": "airport",
+        "size": "Major Hub",
+        "is_gto": true,
+        "icon": "\u2708\ufe0f",
+        "layer": "infrastructure"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.5332,
+          27.9755
+        ]
+      },
+      "properties": {
+        "name": "Tampa International Airport",
+        "code": "TPA",
+        "type": "airport",
+        "size": "Major Hub",
+        "is_gto": true,
+        "icon": "\u2708\ufe0f",
+        "layer": "infrastructure"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.2718,
+          29.69
+        ]
+      },
+      "properties": {
+        "name": "Gainesville Regional Airport",
+        "code": "GNV",
+        "type": "airport",
+        "size": "Regional",
+        "is_gto": false,
+        "icon": "\u2708\ufe0f",
+        "layer": "infrastructure"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.2906,
+          25.7932
+        ]
+      },
+      "properties": {
+        "name": "Miami International Airport",
+        "code": "MIA",
+        "type": "airport",
+        "size": "Major Hub",
+        "is_gto": false,
+        "icon": "\u2708\ufe0f",
+        "layer": "infrastructure"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.1527,
+          26.0726
+        ]
+      },
+      "properties": {
+        "name": "Fort Lauderdale-Hollywood",
+        "code": "FLL",
+        "type": "airport",
+        "size": "Major Hub",
+        "is_gto": false,
+        "icon": "\u2708\ufe0f",
+        "layer": "infrastructure"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.6879,
+          30.4941
+        ]
+      },
+      "properties": {
+        "name": "Jacksonville International",
+        "code": "JAX",
+        "type": "airport",
+        "size": "Major Hub",
+        "is_gto": false,
+        "icon": "\u2708\ufe0f",
+        "layer": "infrastructure"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.3487,
+          29.6499
+        ]
+      },
+      "properties": {
+        "name": "Ben Hill Griffin Stadium",
+        "location": "Gainesville",
+        "capacity": 88548,
+        "type": "stadium",
+        "stadium_type": "Football",
+        "is_gto": false,
+        "olympic_ready": false,
+        "icon": "\ud83c\udfdf\ufe0f",
+        "layer": "infrastructure"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.5033,
+          27.9759
+        ]
+      },
+      "properties": {
+        "name": "Raymond James Stadium",
+        "location": "Tampa",
+        "capacity": 65618,
+        "type": "stadium",
+        "stadium_type": "Football/NFL",
+        "is_gto": true,
+        "olympic_ready": true,
+        "icon": "\ud83c\udfdf\ufe0f",
+        "layer": "infrastructure"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.4025,
+          28.5392
+        ]
+      },
+      "properties": {
+        "name": "Camping World Stadium",
+        "location": "Orlando",
+        "capacity": 65438,
+        "type": "stadium",
+        "stadium_type": "Football",
+        "is_gto": true,
+        "olympic_ready": true,
+        "icon": "\ud83c\udfdf\ufe0f",
+        "layer": "infrastructure"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.3839,
+          28.5392
+        ]
+      },
+      "properties": {
+        "name": "Amway Center",
+        "location": "Orlando",
+        "capacity": 18846,
+        "type": "stadium",
+        "stadium_type": "Arena",
+        "is_gto": true,
+        "olympic_ready": true,
+        "icon": "\ud83c\udfe2",
+        "layer": "infrastructure"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.4519,
+          27.9428
+        ]
+      },
+      "properties": {
+        "name": "Amalie Arena",
+        "location": "Tampa",
+        "capacity": 19092,
+        "type": "stadium",
+        "stadium_type": "Arena",
+        "is_gto": true,
+        "olympic_ready": true,
+        "icon": "\ud83c\udfe2",
+        "layer": "infrastructure"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -80.2389,
+          25.958
+        ]
+      },
+      "properties": {
+        "name": "Hard Rock Stadium",
+        "location": "Miami Gardens",
+        "capacity": 64767,
+        "type": "stadium",
+        "stadium_type": "Football/NFL",
+        "is_gto": false,
+        "olympic_ready": false,
+        "icon": "\ud83c\udfdf\ufe0f",
+        "layer": "infrastructure"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.3549,
+          29.6436
+        ]
+      },
+      "properties": {
+        "name": "University of Florida",
+        "location": "Gainesville",
+        "students": 55000,
+        "type": "university",
+        "is_gto": true,
+        "icon": "\ud83c\udf93",
+        "layer": "infrastructure"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.4139,
+          28.0587
+        ]
+      },
+      "properties": {
+        "name": "University of South Florida",
+        "location": "Tampa",
+        "students": 50000,
+        "type": "university",
+        "is_gto": true,
+        "icon": "\ud83c\udf93",
+        "layer": "infrastructure"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.2001,
+          28.6024
+        ]
+      },
+      "properties": {
+        "name": "University of Central Florida",
+        "location": "Orlando",
+        "students": 68000,
+        "type": "university",
+        "is_gto": true,
+        "icon": "\ud83c\udf93",
+        "layer": "infrastructure"
+      }
+    }
+  ]
+}

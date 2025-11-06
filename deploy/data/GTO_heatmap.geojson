@@ -1,0 +1,95 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.3105,
+          29.6437
+        ]
+      },
+      "properties": {
+        "county": "ALACHUA",
+        "population_2035": 329300,
+        "population_2040": 338400,
+        "population_2045": 345600,
+        "avg_population": 337766,
+        "intensity": 0.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -82.4596,
+          27.9947
+        ]
+      },
+      "properties": {
+        "county": "HILLSBOROUGH",
+        "population_2035": 1795300,
+        "population_2040": 1861000,
+        "population_2045": 1914900,
+        "avg_population": 1857066,
+        "intensity": 1.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.3723,
+          28.5421
+        ]
+      },
+      "properties": {
+        "county": "ORANGE",
+        "population_2035": 1755300,
+        "population_2040": 1825600,
+        "population_2045": 1882400,
+        "avg_population": 1821100,
+        "intensity": 0.98
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.3888,
+          28.2174
+        ]
+      },
+      "properties": {
+        "county": "OSCEOLA",
+        "population_2035": 582300,
+        "population_2040": 623800,
+        "population_2045": 660500,
+        "avg_population": 622200,
+        "intensity": 0.19
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -81.7714,
+          28.0295
+        ]
+      },
+      "properties": {
+        "county": "POLK",
+        "population_2035": 972600,
+        "population_2040": 1022000,
+        "population_2045": 1064300,
+        "avg_population": 1019633,
+        "intensity": 0.45
+      }
+    }
+  ]
+}

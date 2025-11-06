@@ -1,0 +1,229 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -82.5033,
+            27.9759
+          ],
+          [
+            -82.4,
+            28.0
+          ],
+          [
+            -82.2,
+            28.1
+          ],
+          [
+            -82.0,
+            28.2
+          ],
+          [
+            -81.8,
+            28.3
+          ],
+          [
+            -81.6,
+            28.4
+          ],
+          [
+            -81.4,
+            28.5
+          ],
+          [
+            -81.3839,
+            28.5392
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Interstate 4",
+        "highway_id": "I-4",
+        "description": "Tampa to Orlando (84 miles)",
+        "is_gto": true,
+        "type": "highway"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -82.3487,
+            29.6499
+          ],
+          [
+            -82.35,
+            29.4
+          ],
+          [
+            -82.36,
+            29.2
+          ],
+          [
+            -82.37,
+            29.0
+          ],
+          [
+            -82.38,
+            28.8
+          ],
+          [
+            -82.4,
+            28.6
+          ],
+          [
+            -82.43,
+            28.4
+          ],
+          [
+            -82.45,
+            28.2
+          ],
+          [
+            -82.47,
+            28.0
+          ],
+          [
+            -82.5033,
+            27.9759
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Interstate 75",
+        "highway_id": "I-75",
+        "description": "North-South corridor through Florida",
+        "is_gto": true,
+        "type": "highway"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -81.6879,
+            30.4941
+          ],
+          [
+            -81.4,
+            30.0
+          ],
+          [
+            -81.3,
+            29.5
+          ],
+          [
+            -81.2,
+            29.0
+          ],
+          [
+            -81.1,
+            28.5
+          ],
+          [
+            -80.9,
+            28.0
+          ],
+          [
+            -80.7,
+            27.5
+          ],
+          [
+            -80.5,
+            27.0
+          ],
+          [
+            -80.3,
+            26.5
+          ],
+          [
+            -80.2906,
+            25.7932
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Interstate 95",
+        "highway_id": "I-95",
+        "description": "East Coast connector",
+        "is_gto": false,
+        "type": "highway"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -81.3839,
+            28.5392
+          ],
+          [
+            -81.3,
+            28.3
+          ],
+          [
+            -81.2,
+            28.1
+          ],
+          [
+            -81.1,
+            27.9
+          ],
+          [
+            -81.0,
+            27.7
+          ],
+          [
+            -80.9,
+            27.5
+          ],
+          [
+            -80.8,
+            27.3
+          ],
+          [
+            -80.7,
+            27.1
+          ],
+          [
+            -80.6,
+            26.9
+          ],
+          [
+            -80.5,
+            26.7
+          ],
+          [
+            -80.4,
+            26.5
+          ],
+          [
+            -80.3,
+            26.3
+          ],
+          [
+            -80.2906,
+            25.7932
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Florida's Turnpike",
+        "highway_id": "FL-Turnpike",
+        "description": "Toll road connecting central Florida",
+        "is_gto": true,
+        "type": "highway"
+      }
+    }
+  ]
+}

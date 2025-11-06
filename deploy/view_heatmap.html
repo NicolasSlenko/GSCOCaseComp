@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Florida GTO Olympic Bid - Strategic Analysis</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body { 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #FFFFFF;
+            min-height: 100vh;
+            color: #0B2239;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: #FFFFFF;
+            padding: 48px 64px;
+            border-bottom: 1px solid #D9D9D9;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .header-top {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 32px;
+        }
+        
+        .vertical-accent {
+            width: 2px;
+            height: 60px;
+            background: #0B2239;
+            margin-right: 24px;
+        }
+        
+        .header-content {
+            flex: 1;
+        }
+        
+        .header h1 {
+            color: #0B2239;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        
+        .header p {
+            color: #4A4A4A;
+            font-size: 14px;
+            font-weight: 400;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+        
+        .header .insight {
+            color: #004A7C;
+            font-size: 18px;
+            font-weight: 500;
+            margin-top: 16px;
+            line-height: 1.4;
+        }
+        
+        .controls {
+            margin-top: 24px;
+        }
+        
+        .control-label {
+            font-size: 13px;
+            color: #5C5C5C;
+            margin-bottom: 12px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+        
+        .layer-toggles {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .toggle-btn {
+            background: #F8F9FA;
+            color: #333333;
+            border: 1px solid #D9D9D9;
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        
+        .toggle-btn:hover {
+            background: #F2F2F2;
+            border-color: #B0B7BD;
+        }
+        
+        .toggle-btn.active {
+            background: #004A7C;
+            color: #FFFFFF;
+            border-color: #004A7C;
+        }
+        
+        .toggle-btn.active::before {
+            content: '✓ ';
+            margin-right: 4px;
+        }
+        
+        .map-container {
+            position: relative;
+            height: calc(100vh - 280px);
+            margin: 0;
+            background: #F8F9FA;
+        }
+        
+        #map { 
+            height: 100%;
+            width: 100%;
+        }
+        
+        .legend {
+            background: #FFFFFF;
+            padding: 24px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            line-height: 1.4;
+            font-size: 13px;
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid #D9D9D9;
+            transition: all 0.3s ease;
+        }
+        
+        .legend.collapsed {
+            padding: 8px;
+            max-height: 40px;
+            overflow: hidden;
+        }
+        
+        .legend.collapsed .legend-content {
+            display: none;
+        }
+        
+        .legend-toggle {
+            background: #004A7C;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        
+        .legend-toggle:hover {
+            background: #003660;
+        }
+        
+        .legend h4 {
+            color: #0B2239;
+            font-size: 18px;
+            margin-bottom: 16px;
+            font-weight: 500;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #D9D9D9;
+            letter-spacing: 0.3px;
+        }
+        
+        /* Mobile responsive legend */
+        @media (max-width: 768px) {
+            .legend {
+                max-width: 90vw;
+                max-height: 40vh;
+                font-size: 11px;
+                padding: 16px;
+            }
+            
+            .legend h4 {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            
+            .legend-item {
+                margin: 6px 0;
+            }
+            
+            .legend-text {
+                font-size: 10px;
+            }
+            
+            .legend-color {
+                width: 16px;
+                height: 16px;
+                margin-right: 8px;
+            }
+            
+            .legend-line {
+                width: 24px;
+                height: 2px;
+                margin-right: 8px;
+            }
+        }
+        
+        .legend-section {
+            margin-bottom: 20px;
+        }
+        
+        .legend-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            margin-right: 12px;
+            border: 1px solid #D9D9D9;
+        }
+        
+        .legend-line {
+            width: 32px;
+            height: 3px;
+            margin-right: 12px;
+            border-radius: 2px;
+        }
+        
+        .legend-text {
+            color: #333333;
+            font-size: 12px;
+            font-weight: 400;
+        }
+        
+        .gto-indicator {
+            background: #004A7C;
+            color: #FFFFFF;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        
+        .legend-divider {
+            height: 1px;
+            background: #E0E0E0;
+            margin: 16px 0;
+        }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #FFFFFF;
+            padding: 32px 48px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #D9D9D9;
+            display: none;
+            z-index: 10000;
+            font-size: 14px;
+            color: #0B2239;
+            font-weight: 400;
+        }
+        
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+        
+        /* Custom Popup Styling with Images - COMPACT VERSION */
+        .leaflet-popup-content-wrapper {
+            border-radius: 6px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+            border: 1px solid #D9D9D9;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            padding: 0;
+            max-width: 280px;
+        }
+        
+        .leaflet-popup-content {
+            margin: 0;
+            font-size: 11px;
+            line-height: 1.5;
+            color: #333333;
+        }
+        
+        .popup-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px 6px 0 0;
+            display: block;
+        }
+        
+        .popup-body {
+            padding: 12px;
+        }
+        
+        .leaflet-popup-content strong {
+            color: #0B2239;
+            font-weight: 500;
+            font-size: 13px;
+        }
+        
+        .popup-metric {
+            color: #004A7C;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .popup-label {
+            color: #5C5C5C;
+            font-size: 9px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+            margin-top: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-top">
+                <div class="vertical-accent"></div>
+                <div class="header-content">
+                    <h1>Florida GTO Triangle Olympic Corridor Analysis</h1>
+                    <p>Strategic Infrastructure & Population Growth Assessment</p>
+                    <p class="insight">Corridor demonstrates fiscally controlled, schedule-feasible Olympic execution with state coordination</p>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <div class="control-label">INTERACTIVE LAYERS</div>
+                <div class="layer-toggles">
+                    <button class="toggle-btn active" onclick="toggleLayer('heatmap')">Growth Heatmap</button>
+                    <button class="toggle-btn" onclick="toggleLayer('highways')">Highway Network</button>
+                    <button class="toggle-btn" onclick="toggleLayer('airports')">Airports</button>
+                    <button class="toggle-btn" onclick="toggleLayer('stadiums')">Venues & Stadiums</button>
+                    <button class="toggle-btn" onclick="toggleLayer('universities')">Olympic Village Sites</button>
+                </div>
+            </div>
+            
+            <div class="source-note">
+                Source: BEBR Florida Population Projections 2035-2045 | FDOT Transportation Network | Analysis Period: 2035-2045
+            </div>
+        </div>
+        
+        <div class="map-container">
+            <div id="map"></div>
+            <div class="loading" id="loading">Loading analysis data</div>
+        </div>
+    </div>
+    
+    <script>
+        let map;
+        let heatmapLayer = null;
+        let countyMarkersLayer = null;
+        let highwayLayer = null;
+        let infrastructureLayers = {
+            airports: null,
+            stadiums: null,
+            universities: null
+        };
+        let legendControl;
+        
+        // Track which layers are visible
+        let visibleLayers = {
+            heatmap: true,
+            highways: false,
+            airports: false,
+            stadiums: false,
+            universities: false
+        };
+        
+        // Image mapping for venues, airports, and universities
+        const imageMapping = {
+            venues: {
+                'Raymond James Stadium': 'images/raymond-james.jpg',
+                'Camping World Stadium': 'images/camping-world.jpg',
+                'Amway Center': 'images/amway.avif',
+                'Amalie Arena': 'images/amalie.jpg',
+                'Orange County Convention': 'images/orange-convention.jpg',
+                'TPC Sawgrass': 'images/tpc-sawgrass.jpg',
+                'Hard Rock Stadium': 'images/HardRock.webp',
+                'Exploria Stadium': 'images/exploria.jpg',
+                'Addition Financial Arena': 'images/ucf-arena.jpg',
+                'Ben Hill Griffin Stadium': 'images/ben-hill.png'
+            },
+            airports: {
+                'Orlando International Airport': 'images/mco.jpg',
+                'Tampa International Airport': 'images/tpa.jpg',
+                'Miami International Airport': 'images/miami.png',
+                'Fort Lauderdale-Hollywood': 'images/fll.jpg',
+                'Jacksonville International': 'images/jax.avif',
+                'Lakeland Linder International': 'images/lakeland-airport.jpg',
+                'Gainesville Regional Airport': 'images/GNV.jpg'
+            },
+            villages: {
+                'Lakeland Olympic Village': 'images/lakeland.jpg',
+                'Florida Southern College': 'images/florida-southern.jpg',
+                'Polk State College': 'images/polk-state.jpg'
+            }
+        };
+        
+        // Function to get color based on growth rate (using design system colors)
+        function getColorFromGrowthRate(growthRate) {
+            if (growthRate > 10) {
+                return "#004A7C"; // Primary accent - highest growth
+            } else if (growthRate >= 7) {
+                return "#3498db"; // Medium blue
+            } else if (growthRate >= 4) {
+                return "#B0B7BD"; // Secondary neutral
+            } else {
+                return "#D9D9D9"; // Light gray
+            }
+        }
+        
+        // Toggle infrastructure layers
+        function toggleLayer(layerType) {
+            const btn = event.target;
+            visibleLayers[layerType] = !visibleLayers[layerType];
+            
+            if (visibleLayers[layerType]) {
+                btn.classList.add('active');
+                
+                if (layerType === 'heatmap') {
+                    if (heatmapLayer) map.addLayer(heatmapLayer);
+                } else if (layerType === 'highways') {
+                    if (highwayLayer) map.addLayer(highwayLayer);
+                } else if (infrastructureLayers[layerType]) {
+                    map.addLayer(infrastructureLayers[layerType]);
+                }
+            } else {
+                btn.classList.remove('active');
+                
+                if (layerType === 'heatmap') {
+                    if (heatmapLayer) map.removeLayer(heatmapLayer);
+                } else if (layerType === 'highways') {
+                    if (highwayLayer) map.removeLayer(highwayLayer);
+                } else if (infrastructureLayers[layerType]) {
+                    map.removeLayer(infrastructureLayers[layerType]);
+                }
+            }
+        }
+        
+        // Initialize map centered on Tampa-Orlando corridor
+        function initMap() {
+            map = L.map('map', {
+                center: [28.0, -81.8],  // Centered on Lakeland area
+                zoom: 8,
+                minZoom: 7,
+                maxZoom: 11
+            });
+            
+            // Add base map (light, clean style)
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '© OpenStreetMap contributors © CARTO',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(map);
+            
+            // Add legend with design system styling
+            legendControl = L.control({position: 'bottomright'});
+            legendControl.onAdd = function() {
+                const div = L.DomUtil.create('div', 'legend');
+                div.innerHTML = `
+                    <button class="legend-toggle" onclick="this.parentElement.classList.toggle('collapsed'); this.textContent = this.parentElement.classList.contains('collapsed') ? 'Show Legend ▼' : 'Hide Legend ▲';">Hide Legend ▲</button>
+                    <div class="legend-content">
+                        <div class="legend-section">
+                            <h4>Population Growth Rate (2035-2045)</h4>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #004A7C;"></span>
+                                <span class="legend-text">>10% — Highest Growth</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #3498db;"></span>
+                                <span class="legend-text">7–10% — High Growth</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #B0B7BD;"></span>
+                                <span class="legend-text">4–7% — Moderate Growth</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color" style="background: #D9D9D9;"></span>
+                                <span class="legend-text"><4% — Lower Growth</span>
+                            </div>
+                        </div>
+                        
+                        <div class="legend-divider"></div>
+                        
+                        <div class="legend-section">
+                            <h4>Infrastructure Assets</h4>
+                            <div class="legend-item">
+                                <span class="legend-line" style="background: #004A7C;"></span>
+                                <span class="legend-text">I-4 Corridor (Tampa-Orlando)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span style="font-size: 16px;">✈️</span>
+                                <span class="legend-text" style="margin-left: 8px;">Regional Airport</span>
+                            </div>
+                            <div class="legend-item">
+                                <span style="font-size: 16px;">🏟️</span>
+                                <span class="legend-text" style="margin-left: 8px;">Major Stadium (60k+ capacity)</span>
+                            </div>
+                            <div class="legend-item">
+                                <span style="font-size: 16px;">🏢</span>
+                                <span class="legend-text" style="margin-left: 8px;">Arena Venue</span>
+                            </div>
+                            <div class="legend-item">
+                                <span style="font-size: 16px;">🏘️</span>
+                                <span class="legend-text" style="margin-left: 8px;">Olympic Village</span>
+                            </div>
+                        </div>
+                        
+                        <div class="legend-divider"></div>
+                        
+                        <div class="legend-item">
+                            <span class="gto-indicator">TO</span>
+                            <span class="legend-text" style="margin-left: 8px; font-weight: 500;">Tampa-Orlando Corridor</span>
+                        </div>
+                    </div>
+                `;
+                return div;
+            };
+            legendControl.addTo(map);
+            
+            // Load all data
+            loadHighways();
+            loadInfrastructure();
+            loadPopulationData();
+        }
+        
+        // Load highway data
+        function loadHighways() {
+            fetch('data/Florida_highways.geojson')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Highway data loaded:', data.features.length, 'routes');
+                    
+                    highwayLayer = L.geoJSON(data, {
+                        style: function(feature) {
+                            // Highlight I-4 corridor as primary
+                            const isI4 = feature.properties.name === 'I-4';
+                            return {
+                                color: isI4 ? '#004A7C' : (feature.properties.is_gto ? '#3498db' : '#B0B7BD'),
+                                weight: isI4 ? 5 : (feature.properties.is_gto ? 3 : 2),
+                                opacity: isI4 ? 1.0 : (feature.properties.is_gto ? 0.8 : 0.5),
+                                dashArray: isI4 ? null : (feature.properties.is_gto ? null : '5, 5')
+                            };
+                        },
+                        onEachFeature: (feature, layer) => {
+                            const props = feature.properties;
+                            const isI4 = props.name === 'I-4';
+                            const toLabel = isI4 ? '<span class="gto-indicator">TO CORRIDOR</span><br><br>' : '';
+                            layer.bindPopup(`
+                                <div class="popup-body">
+                                    ${toLabel}
+                                    <strong style="font-size: 13px;">${props.name}</strong><br>
+                                    <span style="color: #5C5C5C; font-size: 11px;">${props.description}</span>
+                                </div>
+                            `);
+                        }
+                    });
+                    
+                    console.log('Highway layer created');
+                })
+                .catch(error => {
+                    console.error('Error loading highways:', error);
+                });
+        }
+        
+        // Load infrastructure data
+        function loadInfrastructure() {
+            fetch('data/Florida_infrastructure.geojson')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Infrastructure data loaded:', data.features.length, 'features');
+                    
+                    const airports = data.features.filter(f => f.properties.type === 'airport');
+                    const stadiums = data.features.filter(f => f.properties.type === 'stadium');
+                    
+                    // Olympic requirements descriptions for airports
+                    const airportRequirements = {
+                        'Orlando International Airport': 'IOC requires 40M+ annual passengers. MCO serves 50M annually, exceeding requirements. Primary gateway for international delegations and media. 30-minute drive to Olympic Village.',
+                        'Tampa International Airport': 'Serves 22M passengers annually. Western corridor gateway for Tampa Bay events. Ranked #1 U.S. airport for passenger experience. 40-minute drive to Olympic Village.',
+                        'Lakeland Linder International': 'Regional airport 10 minutes from Olympic Village. Provides charter flight access for VIPs and delegations. Recently expanded terminal can handle increased traffic.',
+                        'Miami International Airport': 'Secondary gateway with 46M annual passengers. Provides South Florida contingency capacity and Latin American delegation access.',
+                        'Fort Lauderdale-Hollywood': 'Supplemental international hub (36M passengers). Alleviates Miami congestion during peak Olympic arrival periods.',
+                        'Jacksonville International': '6M annual passengers. Provides northern corridor access for contingency operations.'
+                    };
+                    
+                    // Olympic requirements descriptions for venues - UPDATED
+                    const venueRequirements = {
+                        'Camping World Stadium': 'IOC requires 80,000+ seat stadium for Opening/Closing Ceremonies. EXPANDED to 80,438 capacity (+15,000 seats) specifically for Olympics. Recent $207M renovation provides Olympic-ready broadcast and security infrastructure. Also hosts Track & Field finals. Central Orlando location 25 minutes from Olympic Village.',
+                        'Raymond James Stadium': 'Primary Soccer venue with 65,618 capacity. Recent Super Bowl host (2021) demonstrates Olympic-ready broadcast and security infrastructure. FIFA-compliant field dimensions. 35-minute drive from Olympic Village.',
+                        'Amway Center': 'IOC requires 18,000+ seat arena for Basketball. Provides 18,846 capacity with NBA-grade facilities. Hosted 2012 NBA All-Star Game. Modern broadcast center and athlete amenities. Downtown Orlando location 20 minutes from Village.',
+                        'Amalie Arena': 'Ice Hockey and Figure Skating venue (19,092 capacity). NHL Tampa Bay Lightning home arena with Olympic ice specifications. Convertible floor for multiple sports. 40-minute drive from Village.',
+                        'Orange County Convention': 'IOC requires 200,000+ sq ft for Fencing, Wrestling, Boxing, and Taekwondo. Provides 2.1M sq ft with modular layout. Broadcast Center location allows rapid media access. Adjacent to MCO airport.',
+                        'Exploria Stadium': 'Olympic Soccer preliminary matches (25,500 capacity). MLS Orlando City SC home venue. Opened 2017 with modern amenities. Downtown Orlando location ideal for spectator access.',
+                        'Addition Financial Arena': 'Gymnastics and Volleyball venue (10,000 capacity). UCF campus arena with modern facilities. 25-minute drive from Olympic Village.',
+                        'TPC Sawgrass': 'Olympic Golf venue hosting PGA Tour\'s THE PLAYERS Championship. Stadium Course meets IOC specifications with 18,000+ spectator capacity. Proven international broadcast infrastructure.',
+                        'Hard Rock Stadium': 'Contingency venue (65,326 capacity) and preliminary Soccer matches. Recent $550M renovation. Retractable canopy protects from Florida weather. Hosted Super Bowl LIV (2020).'
+                    };
+                    
+                    // Create airport layer with images and requirements
+                    infrastructureLayers.airports = L.geoJSON(airports, {
+                        pointToLayer: (feature, latlng) => {
+                            return L.marker(latlng, {
+                                icon: L.divIcon({
+                                    className: 'custom-icon',
+                                    html: '<div style="font-size: 22px;">✈️</div>',
+                                    iconSize: [28, 28]
+                                })
+                            });
+                        },
+                        onEachFeature: (feature, layer) => {
+                            const props = feature.properties;
+                            const imagePath = imageMapping.airports[props.name];
+                            const isTOCorridor = ['Orlando International Airport', 'Tampa International Airport', 'Lakeland Linder International'].includes(props.name);
+                            const toLabel = isTOCorridor ? '<span class="gto-indicator">TO</span>' : '';
+                            const requirement = airportRequirements[props.name] || 'Provides regional air connectivity for Olympic operations.';
+                            
+                            const imageHtml = imagePath ? `<img src="${imagePath}" class="popup-image" alt="${props.name}" onerror="this.style.display='none'">` : '';
+                            
+                            layer.bindPopup(`
+                                ${imageHtml}
+                                <div class="popup-body">
+                                    ${toLabel ? toLabel + '<br><br>' : ''}
+                                    <strong style="font-size: 13px;">✈️ ${props.name}</strong><br>
+                                    <div class="popup-label">AIRPORT CODE</div>
+                                    <div style="color: #004A7C; font-weight: 600; font-size: 16px;">${props.code}</div>
+                                    <div class="popup-label">ANNUAL PASSENGERS</div>
+                                    <div style="color: #333333; font-weight: 500; font-size: 11px;">${props.size}</div>
+                                    <div class="popup-label" style="margin-top: 8px;">OLYMPIC ALIGNMENT</div>
+                                    <div style="color: #333333; font-size: 10px; line-height: 1.4; background: #F8F9FA; padding: 8px; border-radius: 4px; margin-top: 3px;">
+                                        ${requirement}
+                                    </div>
+                                </div>
+                            `, {
+                                maxWidth: 260,
+                                className: 'custom-popup'
+                            });
+                        }
+                    });
+                    
+                    // Create stadium layer with images and requirements
+                    infrastructureLayers.stadiums = L.geoJSON(stadiums, {
+                        pointToLayer: (feature, latlng) => {
+                            const icon = feature.properties.capacity > 60000 ? '🏟️' : '🏢';
+                            return L.marker(latlng, {
+                                icon: L.divIcon({
+                                    className: 'custom-icon',
+                                    html: `<div style="font-size: 22px;">${icon}</div>`,
+                                    iconSize: [28, 28]
+                                })
+                            });
+                        },
+                        onEachFeature: (feature, layer) => {
+                            const props = feature.properties;
+                            const imagePath = imageMapping.venues[props.name];
+                            const isTOCorridor = ['Camping World Stadium', 'Raymond James Stadium', 'Amway Center', 'Amalie Arena', 'Exploria Stadium', 'Addition Financial Arena', 'Orange County Convention'].includes(props.name);
+                            const toLabel = isTOCorridor ? '<span class="gto-indicator">TO</span>' : '';
+                            const olympicReady = props.olympic_ready ? '<div style="color: #27ae60; font-weight: 500; margin-top: 6px;">✓ Olympic-Ready Venue</div>' : '';
+                            const requirement = venueRequirements[props.name] || 'Meets IOC venue standards for Olympic competition.';
+                            
+                            const imageHtml = imagePath ? `<img src="${imagePath}" class="popup-image" alt="${props.name}" onerror="this.style.display='none'">` : '';
+                            
+                            layer.bindPopup(`
+                                ${imageHtml}
+                                <div class="popup-body">
+                                    ${toLabel ? toLabel + '<br><br>' : ''}
+                                    <strong style="font-size: 13px;">${props.name}</strong><br>
+                                    <div style="color: #5C5C5C; font-size: 10px; margin-top: 3px;">${props.location}</div>
+                                    <div class="popup-label">CAPACITY</div>
+                                    <div class="popup-metric">${props.capacity.toLocaleString()}</div>
+                                    <div class="popup-label">VENUE TYPE</div>
+                                    <div style="color: #333333; font-size: 11px;">${props.stadium_type}</div>
+                                    ${olympicReady}
+                                    <div class="popup-label" style="margin-top: 8px;">OLYMPIC ALIGNMENT</div>
+                                    <div style="color: #333333; font-size: 10px; line-height: 1.4; background: #F8F9FA; padding: 8px; border-radius: 4px; margin-top: 3px;">
+                                        ${requirement}
+                                    </div>
+                                </div>
+                            `, {
+                                maxWidth: 260,
+                                className: 'custom-popup'
+                            });
+                        }
+                    });
+                    
+                    // Create LAKELAND Olympic Village layer
+                    const lakelandVillage = {
+                        "type": "FeatureCollection",
+                        "features": [
+                            {
+                                "type": "Feature",
+                                "properties": {
+                                    "name": "Lakeland Olympic Village",
+                                    "location": "Lakeland, Polk County",
+                                    "beds": 15000,
+                                    "type": "Primary Village"
+                            },
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [-81.9498, 28.0395]
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "properties": {
+                                "name": "Florida Southern College",
+                                "location": "Lakeland",
+                                "beds": 2500,
+                                "type": "Supplemental Housing"
+                            },
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [-81.9476, 28.0217]
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "properties": {
+                                "name": "Polk State College",
+                                "location": "Lakeland",
+                                "beds": 1500,
+                                "type": "Supplemental Housing"
+                            },
+                            "geometry": {
+                                "type": "Point",
+                                "coordinates": [-81.9812, 28.0614]
+                            }
+                        }
+                    ]
+                };
+                
+                infrastructureLayers.universities = L.geoJSON(lakelandVillage, {
+                    pointToLayer: (feature, latlng) => {
+                        return L.marker(latlng, {
+                            icon: L.divIcon({
+                                className: 'custom-icon',
+                                html: '<div style="font-size: 24px;">🏘️</div>',
+                                iconSize: [30, 30]
+                            })
+                        });
+                    },
+                    onEachFeature: (feature, layer) => {
+                        const props = feature.properties;
+                        const imagePath = imageMapping.villages[props.name];
+                        const isPrimary = props.type === 'Primary Village';
+                        
+                        let requirement;
+                        if (isPrimary) {
+                            requirement = 'IOC requires 15,000+ athlete beds with integrated dining, medical, and training facilities. Lakeland Village provides new construction with: Olympic-grade dining halls, 24/7 medical center, training facilities, and recreation areas. Midpoint location (35 min to Tampa, 25 min to Orlando) minimizes athlete travel. Post-Olympic conversion to workforce housing for Polk County\'s 12% population growth.';
+                        } else {
+                            requirement = `Supplemental housing providing ${props.beds.toLocaleString()} beds for overflow and support staff. Existing campus infrastructure with dining and medical facilities. 10-minute drive to main Olympic Village.`;
+                        }
+                        
+                        const imageHtml = imagePath ? `<img src="${imagePath}" class="popup-image" alt="${props.name}" onerror="this.style.display='none'">` : '';
+                        
+                        layer.bindPopup(`
+                            ${imageHtml}
+                            <div class="popup-body">
+                                <span class="gto-indicator">TO</span><br><br>
+                                <strong style="font-size: 13px;">🏘️ ${props.name}</strong><br>
+                                <div style="color: #5C5C5C; font-size: 10px; margin-top: 3px;">${props.location}</div>
+                                <div class="popup-label">ATHLETE BEDS</div>
+                                <div class="popup-metric">${props.beds.toLocaleString()}</div>
+                                <div class="popup-label">FACILITY TYPE</div>
+                                <div style="color: #004A7C; font-weight: 500; font-size: 11px;">${props.type}</div>
+                                <div class="popup-label" style="margin-top: 8px;">OLYMPIC ALIGNMENT</div>
+                                <div style="color: #333333; font-size: 10px; line-height: 1.4; background: #F8F9FA; padding: 8px; border-radius: 4px; margin-top: 3px;">
+                                    ${requirement}
+                                </div>
+                            </div>
+                        `, {
+                            maxWidth: 260,
+                            className: 'custom-popup'
+                        });
+                    }
+                });
+                
+                console.log('Infrastructure layers created');
+            })
+            .catch(error => {
+                console.error('Error loading infrastructure:', error);
+            });
+        }
+        
+        // Load population data
+        function loadPopulationData() {
+            document.getElementById('loading').style.display = 'block';
+            
+            fetch('data/Florida_heatmap_2045.geojson')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Loaded population data:', data.features.length, 'counties');
+                    
+                    // Update TO corridor counties (remove Alachua, add Polk)
+                    data.features = data.features.map(f => {
+                        if (f.properties.county === 'Polk') {
+                            f.properties.is_gto = true;
+                        }
+                        if (f.properties.county === 'Alachua') {
+                            f.properties.is_gto = false;
+                        }
+                        return f;
+                    });
+                    
+                    // Create heatmap points
+                    const heatPoints = data.features.map(f => {
+                        const coords = f.geometry.coordinates;
+                        const growthRate = f.properties.growth_rate;
+                        
+                        let intensity;
+                        if (growthRate > 10) {
+                            intensity = 1.0;
+                        } else if (growthRate >= 7) {
+                            intensity = 0.7;
+                        } else if (growthRate >= 4) {
+                            intensity = 0.4;
+                        } else {
+                            intensity = 0.2;
+                        }
+                        
+                        return [coords[1], coords[0], intensity];
+                    });
+                    
+                    // Create heatmap layer with design system colors
+                    heatmapLayer = L.heatLayer(heatPoints, {
+                        radius: 50,
+                        blur: 35,
+                        maxZoom: 10,
+                        max: 1.0,
+                        gradient: {
+                            0.0: '#D9D9D9',
+                            0.2: '#D9D9D9',
+                            0.4: '#B0B7BD',
+                            0.7: '#3498db',
+                            1.0: '#004A7C'
+                        }
+                    }).addTo(map);
+                    
+                    // Add county markers
+                    countyMarkersLayer = L.geoJSON(data, {
+                        pointToLayer: (feature, latlng) => {
+                            const isTO = feature.properties.is_gto;
+                            const growthRate = feature.properties.growth_rate;
+                            const fillColor = getColorFromGrowthRate(growthRate);
+                            
+                            return L.circleMarker(latlng, {
+                                radius: isTO ? 10 : 5,
+                                fillColor: fillColor,
+                                color: isTO ? "#0B2239" : "#333333",
+                                weight: isTO ? 3 : 1,
+                                opacity: 1,
+                                fillOpacity: 0.85
+                            });
+                        },
+                        onEachFeature: (feature, layer) => {
+                            const props = feature.properties;
+                            const toLabel = props.is_gto ? '<span class="gto-indicator">TO CORRIDOR</span><br><br>' : '';
+                            
+                            layer.bindPopup(`
+                                <div class="popup-body">
+                                    ${toLabel}
+                                    <strong style="font-size: 13px; color: #0B2239;">${props.county} County</strong><br>
+                                    <div style="margin-top: 8px;">
+                                        <div class="popup-label">2045 POPULATION</div>
+                                        <div class="popup-metric">${props.population.toLocaleString()}</div>
+                                    </div>
+                                    <div style="margin-top: 8px;">
+                                        <div class="popup-label">10-YEAR GROWTH (2035-2045)</div>
+                                        <div style="color: ${getColorFromGrowthRate(props.growth_rate)}; font-size: 18px; font-weight: 700;">+${props.growth_rate}%</div>
+                                    </div>
+                                </div>
+                            `, {
+                                maxWidth: 220
+                            });
+                        }
+                    }).addTo(map);
+                    
+                    document.getElementById('loading').style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Error loading data:', error);
+                    document.getElementById('loading').innerHTML = '❌ Error loading data';
+                    document.getElementById('loading').style.color = '#0B2239';
+                });
+        }
+        
+        // Initialize map on page load
+        document.addEventListener('DOMContentLoaded', initMap);
+    </script>
+</body>
+</html>
